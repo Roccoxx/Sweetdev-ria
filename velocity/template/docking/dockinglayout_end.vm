@@ -1,0 +1,21 @@
+#parse("velocity/template/spliterlayout/spliterlayout_end.vm")
+
+
+<script type="text/javascript">
+        new SweetDevRia.WindowDocking ("${id}");
+
+#foreach($col in $dockingColumns.keySet())
+	SweetDevRia.$("${id}").addColumn ("${col}_zone");
+	SweetDevRia.$("${id}").addSpliter("${col}");
+#end
+
+#foreach($col in $dockingColumns)
+	#foreach($win in $col)
+		SweetDevRia.$("${id}").addWindow("${win}");
+	#end
+	
+#end
+
+SweetDevRia.$("${id}").init();
+
+</script>

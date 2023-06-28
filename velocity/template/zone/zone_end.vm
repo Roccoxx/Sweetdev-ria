@@ -1,0 +1,15 @@
+<!-- end ria:zone ${id} -->
+#if((!${url} || "${url}" == "") && ${loadAtStartup})
+<script type="text/javascript" id="${id}Load">
+	YAHOO.util.Event.addListener(window, "load", SweetDevRia.$("${id}").onLoaded());
+	var ${id}Load = document.getElementById('${id}Load');
+	${id}Load.parentNode.removeChild(${id}Load);
+</script>
+#end
+</div>
+#if (${model.initialRedirectURL})
+## SWTRIA-971
+<script type="text/javascript">
+		SweetDevRia.$("${id}").initialRedirectURL = "${model.initialRedirectURL}";
+</script>
+#end

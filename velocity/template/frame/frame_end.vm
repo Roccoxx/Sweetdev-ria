@@ -1,0 +1,30 @@
+#if(${contentId}=="")
+	</div>
+#end
+</div>
+
+#if(${contentId}=="")
+	<div style="clear:left;"></div>
+#end
+
+<script type="text/javascript">
+	#if(${contentId}!="")
+		var content = document.getElementById("${contentId}");
+		
+		content.parentNode.insertBefore(document.getElementById("${id}_frame_container"),content);
+		
+		document.getElementById("${id}_frame_container").appendChild(content);
+	#end
+	
+	new SweetDevRia.Frame("${id}");
+	SweetDevRia.$("${id}").contentId = "#if(${contentId}=="")${id}_container#else${contentId}#end";
+	SweetDevRia.$("${id}").resizeMode = ${resize};
+	SweetDevRia.$("${id}").borderMode = ${border};
+	SweetDevRia.$("${id}").canDrag = ${canDrag};
+	SweetDevRia.$("${id}").showBorderOnOver = ${showBorderOnOver};
+	SweetDevRia.$("${id}").hideDuringDrag = false;
+	#if (${styleClass})SweetDevRia.$("${id}").borderType = "${styleClass}";#end
+	
+	document.getElementById(SweetDevRia.$("${id}").contentId).style.overflow = "hidden";
+	
+</script>

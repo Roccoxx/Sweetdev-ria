@@ -1,0 +1,14 @@
+<div id="${id}_header" class="ideo-acc-header ideo-acc-headerBackground ${styleClass}" onclick="SweetDevRia.$('${accordionId}').open('${id}');return false;SweetDevRia.EventHelper.stopPropagation(event);" style="${style}">
+	<a href="#" onclick="SweetDevRia.$('${accordionId}').open('${id}');SweetDevRia.EventHelper.stopPropagation(event);return false;" class="ideo-acc-headerLink"  
+	title="${i18n.titleLink}">
+		#if(${iconStyleClass})<img src="${imgPath}/tree/pix.gif" class="ideo-acc-headerIcon ${iconStyleClass}" alt=""/>#end<span style="vertical-align:middle">${titleUnescape}</span> 
+	</a>
+</div>
+
+<div id="${id}" #if(${contentStyle})style="${contentStyle}"#end class="ideo-acc-contentClass#if(${contentStyleClass}) ${contentStyleClass}#end">
+	<script type="text/javascript">
+		SweetDevRia.$("${accordionId}").addItem( new SweetDevRia.AccordionItem("${id}", "${title}") );
+		#if (${openAtStartup})
+			SweetDevRia.$("${accordionId}").openAtStartupId="${id}";
+		#end
+	</script>

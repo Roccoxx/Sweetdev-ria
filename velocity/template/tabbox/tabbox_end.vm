@@ -1,0 +1,5 @@
+</div>
+<script type="text/javascript">
+	new SweetDevRia.RiaTabbox("${id}");
+	SweetDevRia.$('${id}').setYahooView(new YAHOO.widget.TabView('${id}',{ orientation: "${orientation}" }));
+</script>

@@ -1,0 +1,10 @@
+<script type="text/javascript">
+	new SweetDevRia.Mandatory ("${id}");
+	SweetDevRia.$("${id}").formId = "${formId}";
+	SweetDevRia.$("${id}").type = ${type};
+	SweetDevRia.$("${id}").addMessage ([#foreach ($message in ${messages})#if ($velocityCount>0),#end	["${message.type}","${message.message}"]#end]);
+	#foreach ($mandatory in ${mandatoryIds}) 
+		SweetDevRia.$("${id}").addMandatoryId ("${mandatory.mandatoryId}" ,
+		[#foreach ($message in ${mandatory.messages})#if ($velocityCount>0),#end	["${message.type}","${message.message}"]#end]);
+	#end
+</script>

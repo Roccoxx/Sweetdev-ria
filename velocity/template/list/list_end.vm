@@ -1,0 +1,62 @@
+</div>
+<div id="${id}_win_container" class="ideo-lst-hiddenContainer">
+</div>
+<div id="${id}_container" #if (${style})style="${style}"#end  #if (${styleClass})class="${styleClass}"#end>
+</div>
+
+<script type="text/javascript">
+	new SweetDevRia.List("${id}");
+
+	SweetDevRia.$("${id}").i18n={};
+	#foreach( $key in $i18n.keySet() )
+    	SweetDevRia.$("${id}").i18n["$key"] = "$i18n.get($key)";
+	#end
+
+	#if (${format})SweetDevRia.$("${id}").formatData = ${format};#end
+	#if (${itemPerPage})SweetDevRia.$("${id}").itemPerPage = "${itemPerPage}";#end
+	SweetDevRia.$("${id}").totalItemNumber = ${model.size};
+	SweetDevRia.$("${id}").actualPage = ${model.actualPage};
+	SweetDevRia.$("${id}").setList(${model.jsonList});
+	SweetDevRia.$("${id}").canDelete = ${canDelete};
+	SweetDevRia.$("${id}").canModify = ${canModify};
+	SweetDevRia.$("${id}").canAdd = ${canAdd};
+	SweetDevRia.$("${id}").canOrder = ${canOrder};
+	SweetDevRia.$("${id}").canResize = ${canResize};
+	#if (${width})SweetDevRia.$("${id}").width = ${width};#end
+	#if (${height})SweetDevRia.$("${id}").height = ${height};#end
+	SweetDevRia.$("${id}").windowWidth = ${windowWidth};
+	SweetDevRia.$("${id}").windowHeight = ${windowHeight};
+	SweetDevRia.$("${id}").formId = "${formId}";
+	SweetDevRia.$("${id}").render();
+	
+	#if (!${width})SweetDevRia.$("${id}").adaptWidth();#end
+	
+	#if (${frameDisplayed})
+		SweetDevRia.$("${id}").createFrame();
+		SweetDevRia.$("${id}").getFrame().contentId = "${id}_list";
+		SweetDevRia.$("${id}").getFrame().resizeMode = #if(${canResize}==true)SweetDevRia.Frame.RESIZE_MODE_SE #else SweetDevRia.Frame.RESIZE_MODE_NONE#end;
+		SweetDevRia.$("${id}").getFrame().borderMode = SweetDevRia.Frame.BORDER_MODE_ALL;
+		SweetDevRia.$("${id}").getFrame().canDrag = false;
+		SweetDevRia.$("${id}").getFrame().showBorderOnOver = false;
+				
+		
+								SweetDevRia.$("${id}").getFrame().afterResizing = function(){
+				SweetDevRia.$("${id}").setSize(this.getWidth(),this.getHeight());
+		};
+		SweetDevRia.$("${id}").getFrame().onResize = function(){
+			SweetDevRia.$("${id}").setSize(null, this.getHeight());
+					};
+		#else
+		SweetDevRia.$("${id}").createFrame = function(){
+		    return new SweetDevRia.FrameNude("${id}_nude_frame");
+		};
+		
+		SweetDevRia.$("${id}").getFrame = function(){
+		    return new SweetDevRia.FrameNude("${id}_nude_frame");
+		};
+		
+		SweetDevRia.$("${id}").createFrame();
+	#end
+	
+	#if (!${width})SweetDevRia.$("${id}").adaptWidthWithScrollBar();#end
+</script>

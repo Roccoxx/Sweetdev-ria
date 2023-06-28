@@ -1,0 +1,63 @@
+<script type="text/javascript">
+	new SweetDevRia.Suggest ("${model.id}",
+							"${model.preselectedValue}",
+							${model.itemPerPage}, 
+							${model.triggerLength}, 
+							${model.filterMode}, 
+							${model.bufferSize}, 
+							${model.multiSelect}, 
+							${model.multiField}, 
+							${model.caseSensitive},
+							${model.stackSelection},
+							${model.forceSelection},
+							${model.paginable}#if(${model.maxPopupHeight} && $model.maxPopupHeight > 0),
+							${model.maxPopupHeight}#end);
+
+
+	SweetDevRia.$("${model.id}").i18n={};
+	#foreach( $key in $i18n.keySet() )
+    	SweetDevRia.$("${model.id}").i18n["$key"] = "$i18n.get($key)";
+	#end
+
+	##SWTRIA-987
+	if(SweetDevRia.$("${model.id}").paginable){
+		SweetDevRia.$("${model.id}").createPageBar();
+	}
+
+	#if(${preload})
+		SweetDevRia.$("${model.id}").preload = true;
+	#end
+							
+	SweetDevRia.$("${model.id}").render();
+	SweetDevRia.$("${model.id}").initenable = ${model.enabled};
+	SweetDevRia.$("${model.id}").initvisible = ${model.visible};
+	SweetDevRia.$("${model.id}").initenabledInput = ${model.enabledInput};
+	
+	## need to be processed before the processData
+	#if(${model.disabledIds} && ($model.disabledIds.size()>0))
+		SweetDevRia.$("${model.id}").disabledIds = ${model.disabledIdsToJSON};
+	#end
+
+	#if(${model.hiddenIds} && ($model.hiddenIds.size()>0))
+		SweetDevRia.$("${model.id}").hiddenIds = ${model.hiddenIdsToJSON};
+	#end
+	
+	#if(${preload})
+		SweetDevRia.$("${model.id}")._preload = ${model.preloadedJSONData};
+		SweetDevRia.$("${model.id}").updateItemsSpecificities(SweetDevRia.$("${model.id}")._preload.items);##used for enable&visible on items
+		SweetDevRia.$("${model.id}").processData(SweetDevRia.$("${model.id}")._preload);
+		SweetDevRia.$("${model.id}")._preload = null;
+	#end
+	
+	#foreach ($item in $model.preselectedItemsJSON)
+		SweetDevRia.$("${model.id}").switchItemSelection($item);
+	#end
+	
+	#if(${onSelect})
+		SweetDevRia.$("${model.id}").onSelect = function(){ ${onSelect} };
+	#end
+	#if(${onUnSelect})
+		SweetDevRia.$("${model.id}").onUnSelect = function(){ ${onUnSelect} };
+	#end
+
+</script>

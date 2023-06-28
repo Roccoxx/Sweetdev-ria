@@ -1,0 +1,2 @@
+<div id="${id}_container" style="display:inline;#if (${style})${style}#end" class="ideo-sug-main #if(${styleClass})${styleClass}#end" >
+</div>

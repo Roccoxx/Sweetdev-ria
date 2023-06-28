@@ -1,0 +1,7 @@
+</a>
+
+<script type="text/javascript">
+	#if(${hooker})
+		SweetDevRia.HookedComp.getInstance().toHook("${contentId}","${hooker.id}");
+	#end
+</script>

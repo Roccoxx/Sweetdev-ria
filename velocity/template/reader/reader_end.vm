@@ -1,0 +1,25 @@
+<script type="text/javascript">
+
+	var reader = new SweetDevRia.Reader ("${id}"); 
+	reader.exclusive = ${exclusiveCollapse};
+	reader.setData (${model.getJSONDataReader()}); 
+	reader.pageNumber = Math.ceil(${model.provider.getSize()}/${itemPerPage}); // SWTRIA-944
+	
+	//SWTRIA-987
+	SweetDevRia.$("${id}").i18n={};
+	#foreach( $key in $i18n.keySet() )
+    	SweetDevRia.$("${id}").i18n["$key"] = "$i18n.get($key)";
+	#end
+	
+	reader.render ();
+// SWTRIA-944	
+//	var pagebar = new SweetDevRia.PageBar ("pagebar_${id}"); 
+//	pagebar.setPageNumber (Math.ceil(${model.provider.getSize()}/${itemPerPage}));
+//	pagebar.actualPage = 1;
+//	pagebar.linkedId = "${id}";
+//	pagebar.showFirstLast = false;
+//	pagebar.renderFrame = false;
+//	pagebar.displayPageMode = SweetDevRia.PageBar.RESUME_MODE 
+//	pagebar.render ();
+//		
+</script>

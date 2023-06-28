@@ -1,0 +1,5 @@
+<div id="${id}" class="${styleClass}" style="width:${width};${style}">
+<script type="text/javascript">
+	new SweetDevRia.Accordion("${id}");
+</script>
+	<div id="${id}_itemContainer" class="ideo-acc-itemContainer">

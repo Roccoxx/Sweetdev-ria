@@ -1,0 +1,4 @@
+#if(${spliter})
+<div id="${id}" class="ideo-vsp-main #if(${spliterStyleClass})${spliterStyleClass}#end"#if(${spliterStyle}) style="${spliterStyle}"#end>&nbsp;</div>
+#end
+<div id="${id}_zone" style="width : ${width};height : 100%;float:left;${style}" class="ideo-vsp-zone #if(${styleClass}) ${styleClass}#end">

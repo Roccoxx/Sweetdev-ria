@@ -1,0 +1,6 @@
+
+
+<div id="${id}" #if(${style})style="${style}"#end  class="ideo-edi-main #if(${styleClass})${styleClass}#end" ></div>
+
+
+#if (${tooltip} == true)<div id="${id}_editZone" class="ideo-cto-main">#else<div id="${id}_editZone" class="ideo-edi-main" style="display:none">#end

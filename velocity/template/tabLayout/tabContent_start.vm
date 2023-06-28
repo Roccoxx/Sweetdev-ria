@@ -1,0 +1,27 @@
+#set( $id = "${model.id}" )
+
+<div id="${id}_container" style="#if(!${model.selected});display:none#end">
+
+#if(${model.url} && ${model.asIframe})
+##SWTRIA-951
+	<iframe style="border:0px;width:100%;" src="#if( ${model.selected} || ${model.preloaded})${model.url}#else /resources/jsp/blank.html#end" name="${id}_content" id="${id}_content" height="100%" frameborder="no">\
+#else
+<div id="${id}_content" style="width:100%">
+
+## must not be loaded AND url as not iframe OR no url 
+#if(((${model.url} && !${model.asIframe}) || !${model.url}) )
+	#set( $tabid = "${id}" )
+	
+	#set( $id = "${id}_zone" )
+	#set( $loadAtStartup = false )
+	#set( $refreshDelay = 0 )
+	#parse("velocity/template/zone/zone_start.vm")
+	
+	#set( $id = "${tabid}" )
+#end
+
+#end
+
+
+
+

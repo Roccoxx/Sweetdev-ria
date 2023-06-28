@@ -1,0 +1,3 @@
+<div id="${id}Menu_container" class="ideo-lst-hiddenContainer"></div>
+<div id="${id}AddMenu_container" class="ideo-lst-hiddenContainer"></div>
+<div id="${id}_win_content"  class="ideo-lst-hiddenContainer">

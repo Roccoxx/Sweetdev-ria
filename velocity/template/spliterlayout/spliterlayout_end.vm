@@ -1,0 +1,14 @@
+</div>
+<script type="text/javascript">
+#foreach($column in $columns)
+	#if(${column} != "void_column")
+		new SweetDevRia.VSpliter("${column}",${minWidth},"${height}");
+		SweetDevRia.$("${column}").layoutId = "${id}";
+		SweetDevRia.VSpliter.mainSplitter = "${id}";//only resize the main splitter to the required % height
+	#end
+#end
+#foreach($cell in $cells)
+	new SweetDevRia.HSpliter("${cell}",${minHeight});
+	SweetDevRia.$("${cell}").layoutId = "${id}";
+#end
+</script>

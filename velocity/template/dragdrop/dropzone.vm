@@ -1,0 +1,7 @@
+<script type="text/javascript">
+	#if ($handler)
+		new SweetDevRia.DropZone ("${id}", $handler);
+	#else
+		new SweetDevRia.DropZone ("${id}");
+	#end
+</script>

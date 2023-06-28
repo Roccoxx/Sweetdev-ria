@@ -1,0 +1,342 @@
+## Saving the real id.
+#set ($realId = "${id}")
+## Adding a prefix on id.
+#set ($id = "${id}Cal")
+
+## Setting style attribute.
+#set ($cssStyle = "")
+#if ($style != "")
+#set ($cssStyle = " style=${esc.q}${style}${esc.q}")
+#end
+
+#*
+ * Getting i18n parameter.
+ *#
+#set ($dateFormat = ${i18n.format.split("/")})
+#set ($dateSeparator = ${i18n.separator})
+#set ($dateWeeksBeginOnMonday = ${i18n.weeksBeginOnMonday})
+#set ($dateDays = ${i18n.days.split(",")})
+#set ($dateMonths = ${i18n.months.split(",")})
+
+#*
+ * HTML input field generation.
+ *#
+#set ($addFields = "")
+#if ($mode != "standAlone")
+	#if ($field == "exploded" && $mode != "multiSelect" && $mode != "range")
+		#set ($sep = "")
+		#foreach ($pieceOfFormat in ${dateFormat}) $sep 
+			#if($pieceOfFormat=="DD")<input type="text" class="ideo-cal-inputField ${styleClass}" $cssStyle id="${realId}Day" name="${originalId}Day" size="2"/>#end
+			#if($pieceOfFormat=="MM")<input type="text" class="ideo-cal-inputField ${styleClass}" $cssStyle id="${realId}Month" name="${originalId}Month" size="2"/>#end
+			#if($pieceOfFormat=="YY" || $pieceOfFormat=="YYYY")<input type="text" class="ideo-cal-inputField ${styleClass}" $cssStyle id="${realId}Year" name="${originalId}Year" size="4"/>#end
+			#set($sep="${dateSeparator}")
+		#end
+		#set ($addFields = "SweetDevRia.$('${id}').addExplodedDateField('${realId}Year', '${realId}Month', '${realId}Day');")
+	#elseif ($field == "single" && $mode != "multiSelect" && $mode != "range")
+		<input type="text" class="ideo-cal-inputField ${styleClass}" $cssStyle id="${realId}" name="${originalId}"/>
+		#set ($addFields = "SweetDevRia.$('${id}').addSingleDateField('${realId}');")
+	#elseif ($field == "hidden" || $mode == "multiSelect" || $mode == "range")
+		<input type="hidden" id="${realId}" name="${originalId}"/>
+		#set ($addFields = "SweetDevRia.$('${id}').addHiddenDateField('${realId}');")
+	#end
+#end
+
+#*
+ * Detecting calendar mode.
+ *#
+#set ($multiSelect = "")
+#if (!((! $mode) && (("$!mode" == "")||("$mode" == "null"))))
+	#if ($mode == "simple")
+		#set ($javaScriptObject = "SweetDevRia.SimpleCalendar")
+	#elseif ($mode == "standAlone")
+		#set ($javaScriptObject = "SweetDevRia.StandAloneCalendar")
+	#elseif ($mode == "multiSelect")
+		#set ($javaScriptObject = "SweetDevRia.SimpleCalendar")
+		#set ($multiSelect = "SweetDevRia.$('${id}').Options.MULTI_SELECT = true;")
+	#elseif ($mode == "range")
+		#set ($javaScriptObject = "SweetDevRia.DateRangeCalendar")
+		#set ($multiSelect = "SweetDevRia.$('${id}').Options.MULTI_SELECT = true;")
+	#end
+#end
+<script type="text/javascript">
+	new #if(${displayedMonths}==1) $javaScriptObject( #else SweetDevRia.MultiCalendar(${displayedMonths}, $javaScriptObject, #end "${id}","${id}Container");
+	SweetDevRia.$("${id}").i18n={};
+	#foreach( $key in $i18n.keySet() )
+    	SweetDevRia.$("${id}").i18n["$key"] = "$i18n.get($key)";
+	#end 
+	SweetDevRia.$("${id}").initialize = function () {
+		#*
+		 * Create JavaScript Objects.
+		 *#
+//		${id} = new #if(${displayedMonths}==1) $javaScriptObject( #else SweetDevRia.MultiCalendar(${displayedMonths}, $javaScriptObject, #end "${id}","${id}Container"); 
+		$addFields
+		this.customConfig = function() { 
+			this.Config.Locale.MONTHS_LONG = [#set($sep="")#foreach($month in $dateMonths)${sep} "$month"#set($sep=",")#end]; 
+			this.Config.Options.LOCALE_WEEKDAYS = $dateWeeksBeginOnMonday;
+			this.Config.Options.START_WEEKDAY = $dateWeeksBeginOnMonday;
+		}
+		this.setupConfig();
+		$multiSelect
+#if (${popup})
+		this.tooltip = new SweetDevRia.ClickToOpen('${id}tooltip', 0, 0);
+		this.tooltip.autoClose = false; // SRL Why autoclose popup calendar ?!?
+#end
+#*
+ * Date(s) preselection
+ *#
+#set ($dates = "")
+#set ($sep = "")
+#foreach ($date in $preselect)
+	#set($dates = "${dates}${sep}$dateFormatEnglish.format($date)")
+	#set ($sep = ",")
+	#*
+	 * Set month and year on first preselected date.
+	 *#
+	#if ($velocityCount==0)
+			#if ($date)
+		this.setMonth($dateFormatMonth.format($date)-1);
+		this.setYear($dateFormatYear.format($date));
+		#end
+	#end
+#end
+#*
+ * Adding disabled days
+ *#
+#set ($datesDisabledDays = "")
+#set ($sep = "")
+	this.disabledDays = new Array();
+	var disabledSplit;
+#foreach ($disabledDay in $disabledDays)
+	#set ($datesDisabledDays = "${datesDisabledDays}${sep}${disabledDay.date}")
+	#set ($sep = ",")
+	disabledSplit = "${datesDisabledDays}".split("/");	// formatted following the english format : MM/dd/yyyy
+	this.disabledDays.push(SweetDevRia.DateFormat.getDate(disabledSplit[2], disabledSplit[0], disabledSplit[1]));
+#end
+#if ($datesDisabledDays != "")
+		this.addRenderer("$datesDisabledDays", this.renderBodyCellRestricted); 
+#end
+#*
+ * Adding custom days
+ *#
+#set ($datesCustomDays = "")
+#set ($labelsCustomDays = "")
+#set ($styleClassCustomDays = "")
+#set ($sep = "")
+#foreach ($customDay in $customDays)
+	#set ($datesCustomDays = "${datesCustomDays}${sep}${customDay.date}")
+	#set ($labelsCustomDays = "${labelsCustomDays}${sep}${esc.q}${customDay.label}${esc.q}")
+	#set ($styleClassCustomDays = "${styleClassCustomDays}${sep}${esc.q}${customDay.styleClass}${esc.q}")
+	#set ($sep = ",")
+#end
+#if ($datesCustomDays != "")
+	   this.addAcronymRender( "${datesCustomDays}", new Array( ${labelsCustomDays} ), new Array( ${styleClassCustomDays} ) );
+#end
+#if ($mode == "range")
+	#if(${displayedMonths}==1)
+		this.oldRenderStack.copy(this._renderStack);
+	#else
+		for (var p=0; p < this.pages.length; ++p) {
+			this.pages[p].oldRenderStack.copy(this.pages[p]._renderStack);
+		}
+	#end
+#end
+#if ($dates != "")
+		if (this.select)
+			this.select("${dates}");
+		if (this.fillDateInfields)
+			this.fillDateInfields();
+#end
+#if ($minDate)
+		this.minDate = YAHOO.widget.DateMath.add(new Date("$dateFormatEnglish.format($minDate)"), YAHOO.widget.DateMath.DAY, 1);
+#end
+#if ($maxDate)
+		this.maxDate = YAHOO.widget.DateMath.add(new Date("$dateFormatEnglish.format($maxDate)"), YAHOO.widget.DateMath.DAY, 1);
+#end
+		this.render();
+		
+
+		#if(${displayedMonths}==1)
+			if(this.onSelect)
+				this.superOnSelect = this.onSelect;
+			if(this.onDeselect)
+				this.superOnDeselect = this.onDeselect;
+			
+
+			this.onSelect = SweetDevRia.BaseCalendar.prototype._onSelect;
+			this.onDeselect = SweetDevRia.BaseCalendar.prototype._onDeselect;
+		#else
+			for(var i=0;i<this.pages.length;i++){
+
+				if(this.pages[i].onSelect)
+					this.pages[i].superOnSelect = this.pages[i].onSelect;
+				if(this.pages[i].onDeselect)
+					this.pages[i].superOnDeselect = this.pages[i].onDeselect;
+
+				this.pages[i].onSelect = SweetDevRia.MultiCalendar.prototype.subCalOnSelect(this);
+				this.pages[i].onDeselect = SweetDevRia.MultiCalendar.prototype.subCalOnDeselect(this);
+			}
+		#end
+		
+		#if (${frameDisplayed})
+			this.createFrame();
+			this.getFrame().contentId = "${id}_inner";
+			this.getFrame().resizeMode = SweetDevRia.Frame.RESIZE_MODE_NONE;
+			this.getFrame().borderMode = SweetDevRia.Frame.BORDER_MODE_ALL;
+			this.getFrame().canDrag = false;
+			this.getFrame().showBorderOnOver = false;
+		#else
+			this.createFrame = function(){
+			    return new SweetDevRia.FrameNude("${id}_nude_frame");
+			};
+			
+			this.getFrame = function(){
+			    return new SweetDevRia.FrameNude("${id}_nude_frame");
+			};
+			
+			this.createFrame();
+		#end
+		
+	}
+	
+	#if(${hooker})
+		SweetDevRia.$("${id}").hookerId = "${hooker.id}";
+	#end
+	
+//	SweetDevRia.EventHelper.addListener(window, "load", initCalendar${id});
+	
+	
+</script>
+#if (${popup})<div id="${id}tooltip" class="ideo-cto-main ideo-cal-cto" style=""><table style="background-color:transparent"><tr><td>#end
+	<div id="${id}Container"  class="ideo-cal-calWrapper" onclick="SweetDevRia.EventHelper.stopPropagation(event);">
+		<div id="${id}_inner" class="ideo-cal-container">
+		#foreach($calId in $velocityLoopIds)
+		#set ($lastCalId = $calId)
+		<div id="${calId}" class="ideo-cal-displayTableWrap">
+			<table cellspacing="0" class="ideo-cal-main" id="${calId}table">
+				<thead>
+					<tr>
+						<th colspan="7" class="calhead">
+							<div id="${calId}header" class="calheader">
+								<div class="calheader">
+								    ## BEGIN : SWTRIA-978
+									#if($velocityCount==0)<span class="calnavleft"><a id="${calId}navYearLeft" title="${i18n.previousYear}"><img src="${imgPath}/pix.gif" alt="${i18n.previousYear}" class="ideo-cal-prev-year" /></a>
+									<a id="${calId}navMonthLeft" title="${i18n.previousMonth}"><img src="${imgPath}/pix.gif" alt="${i18n.previousMonth}" class="ideo-cal-prev-month" /></a></span>#end
+									<span id="${calId}Month" class="calMonth">month</span>
+									#if($velocityCount+1==${displayedMonths})<span class="calnavright"><a id="${calId}navMonthRight" title="${i18n.nextMonth}"><img src="${imgPath}/pix.gif" alt="${i18n.nextMonth}" class="ideo-cal-next-month" /></a>									
+									<a id="${calId}navYearRight" title="${i18n.nextYear}"><img src="${imgPath}/pix.gif" alt="${i18n.nextYear}" class="ideo-cal-next-year" /></a></span>#end
+									## END : SWTRIA-978
+								</div>
+							</div>
+						</th>
+					</tr>
+					<tr class="calseparator" ><td  colspan="7" ></td></tr>
+					<tr class="calweekdayrow">
+#foreach($day in $dateDays)
+						<th class="calweekdaycell">$day</th>
+#end
+					</tr>
+				</thead>
+				<tbody id="${calId}tbody">
+					<tr>
+						<td class=" calcell calcelltop calcellleft" id="${calId}_cell0"></td>
+						<td class=" calcell calcelltop" id="${calId}_cell1"></td>
+						<td class=" calcell calcelltop" id="${calId}_cell2"></td>
+						<td class=" calcell calcelltop" id="${calId}_cell3"></td>
+						<td class=" calcell calcelltop" id="${calId}_cell4"></td>
+						<td class=" calcell calcelltop" id="${calId}_cell5"></td>
+						<td class=" calcell calcelltop calcellright" id="${calId}_cell6"></td>
+					</tr>
+					<tr>
+						<td class=" calcell calcellleft" id="${calId}_cell7"></td>
+						<td class="calcell" id="${calId}_cell8"></td>
+						<td class="calcell" id="${calId}_cell9"></td>
+						<td class="calcell" id="${calId}_cell10"></td>
+						<td class="calcell" id="${calId}_cell11"></td>
+						<td class="calcell" id="${calId}_cell12"></td>
+						<td class=" calcell calcellright" id="${calId}_cell13"></td>
+					</tr>
+					<tr>
+						<td class=" calcell calcellleft" id="${calId}_cell14"></td>
+						<td class="calcell" id="${calId}_cell15"></td>
+						<td class="calcell" id="${calId}_cell16"></td>
+						<td class="calcell" id="${calId}_cell17"></td>
+						<td class="calcell" id="${calId}_cell18"></td>
+						<td class="calcell" id="${calId}_cell19"></td>
+						<td class=" calcell calcellright" id="${calId}_cell20"></td>
+					</tr>
+					<tr>
+						<td class=" calcell calcellleft" id="${calId}_cell21"></td>
+						<td class="calcell" id="${calId}_cell22"></td>
+						<td class="calcell" id="${calId}_cell23"></td>
+						<td class="calcell" id="${calId}_cell24"></td>
+						<td class="calcell" id="${calId}_cell25"></td>
+						<td class="calcell" id="${calId}_cell26"></td>
+						<td class=" calcell calcellright" id="${calId}_cell27"></td>
+					</tr>
+					<tr>
+						<td class=" calcell calcellleft" id="${calId}_cell28"></td>
+						<td class="calcell" id="${calId}_cell29"></td>
+						<td class="calcell" id="${calId}_cell30"></td>
+						<td class="calcell" id="${calId}_cell31"></td>
+						<td class="calcell" id="${calId}_cell32"></td>
+						<td class="calcell" id="${calId}_cell33"></td>
+						<td class=" calcell calcellright" id="${calId}_cell34"></td>
+					</tr>
+					<tr>
+						<td class=" calcell calcellleft calcellbottom" id="${calId}_cell35"></td>
+						<td class=" calcell calcellbottom" id="${calId}_cell36"></td>
+						<td class=" calcell calcellbottom" id="${calId}_cell37"></td>
+						<td class=" calcell calcellbottom" id="${calId}_cell38"></td>
+						<td class=" calcell calcellbottom" id="${calId}_cell39"></td>
+						<td class=" calcell calcellbottom" id="${calId}_cell40"></td>
+						<td class=" calcell calcellright calcellbottom" id="${calId}_cell41"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>	
+
+#if(${displayedMonths}>1 && $velocityCount < $displayedMonths - 1)
+<div class="ideo-cal-multiCalSeparator">&nbsp;</div>
+#end
+		#end
+		<div class="ideo-cal-footer">
+			#if(${mode}!="standAlone")
+			  <a id="${lastCalId}Today" class="ideo-cal-footerLink"><span>${i18n.today}</span></a>
+			  <a id="${lastCalId}Clear" class="ideo-cal-footerLink"><span>${i18n.clear}</span></a>
+			#end
+			#if(${popup})<a id="${lastCalId}Close" class="ideo-cal-footerLink"><span>${i18n.validate}</span></a>#end
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+#if(${mode}!="standAlone")
+	new SweetDevRia.Button ("${lastCalId}Today_Button");
+	SweetDevRia.$("${lastCalId}Today_Button").contentId = "${lastCalId}Today"; 
+	
+	SweetDevRia.EventHelper.addPostLoadListener(window, function() {
+        //SWTRIA-1231 -> disable the TodayButton if needed
+        var cal = SweetDevRia.$("${lastCalId}");
+        if (cal.isRestrictedDate(new Date())) {
+        	//put a gray skin (like a disabled button)
+        	SweetDevRia.$("${lastCalId}Today_Button").setDisabledSkin();
+        }
+    });
+	
+	new SweetDevRia.Button ("${lastCalId}Clear_Button");
+	SweetDevRia.$("${lastCalId}Clear_Button").contentId = "${lastCalId}Clear"; 
+#end
+#if(${popup})
+	new SweetDevRia.Button ("${lastCalId}Close_Button");
+	SweetDevRia.$("${lastCalId}Close_Button").contentId = "${lastCalId}Close"; 
+#else
+	SweetDevRia.EventHelper.addListener(window, "load", function(){SweetDevRia.$("${id}").getFrame().refreshBorders();});
+#end
+</script>
+
+#*
+ * I create the link if calendar must be in a popup.
+ *#
+#if (${popup})</td></tr></table></div>
+<a href="#" id="openCalendarTooltip${id}" #if(${titleLink})title="${titleLink}"#end onclick="SweetDevRia.$('${id}').openTooltip(this);#if($cancelBubble)event.cancelBubble=true;#end this.blur();SweetDevRia.EventHelper.preventDefault(event);SweetDevRia.EventHelper.stopPropagation(event);return false;" class="ideo-cal-linkClass">
+#end

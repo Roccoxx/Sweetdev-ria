@@ -1,0 +1,208 @@
+<!DOCTYPE jso [
+		<!ELEMENT jso (default*,group*)>
+		<!ELEMENT default EMPTY>
+      	<!ELEMENT group (js|css|group-ref)*>
+
+
+<!-- 
+	key : attribute name to set default value
+	- location :set a default path to locate the resources for all group without location (Location inheritance has priority over default location).
+	You can also use JNDI or environment variable.
+	- timeStampPolicy : Select a default timestamp policy (timeStampPolicy inheritance has priority over default timeStampPolicy).
+	"no" : never add a timestamp suffix and the URL link to the resource.
+	"all" : always add a timestamp suffix and the URL link to the resource.             
+	"local" : (default) add a timestamp suffix and the URL link to the resource only if the resource is local at the application 
+			 (located into webContent directory or in the class path).
+	- conflictRule : Define the behaviour when a same group is defined in several jso.xml file
+	override : the group override the previous one
+	append : the resource of the group is appended to the previous one.	
+	
+-->
+        <!ATTLIST default
+        	key (location|timeStampPolicy|conflictRule) #REQUIRED>
+<!-- value : @see attribut 'key' -->        	
+        <!ATTLIST default
+        	value CDATA #REQUIRED>
+
+
+<!-- group name -->
+        <!ATTLIST group
+                name CDATA #REQUIRED>
+<!-- setting minimise="false" allows to disable JS minimisation for this group. Useful is the scripts are already compacted.-->
+        <!ATTLIST group
+                minimize (true|false) #IMPLIED>
+<!-- setting minimizeCss to true enable the Css Merging and Compression. BE CAREFUL to the url() element that may result in path errors -->
+        <!ATTLIST group
+                minimizeCss (true|false) #IMPLIED>
+<!-- setting resource copy on web-content functionnality.
+	if 'true' resources from jar or distant location will be written on web-content directory of the application server at first access.
+ -->              
+ 		<!ATTLIST group
+                retention (true|false) #IMPLIED>
+<!-- set a path to locate the resources. Inheritable. Set it to "" to cancel the inheritance
+	If the group is set as minimized, a file with the "GROUP_NAME.js" must be defined in the "location/jso/".
+	You can also use JNDI or environment variable.
+	For example : 
+		location = http://localhost:8082/
+		group = minimized
+		
+		Set a file named minimized.js at http://localhost:8082/jso/minimized.js	 
+-->
+        <!ATTLIST group
+                location CDATA #IMPLIED>
+<!-- Select a timestamp policy. Inheritable.
+	"no" : never add a timestamp suffix and the URL link to the resource.
+	"all" : always add a timestamp suffix and the URL link to the resource.             
+	"local" : (default) add a timestamp suffix and the URL link to the resource only if the resource is local at the application 
+			 (located into webContent directory or in the class path). -->
+        <!ATTLIST group
+                timeStampPolicy (all|no|local) #IMPLIED>        
+<!--
+	Define the behaviour when a same group is defined in several jso.xml file
+	override : the group override the previous one
+	append : the resource of the group is appended to the previous one.	
+-->                
+        <!ATTLIST group
+                conflictRule  (override|append) #IMPLIED>                   
+<!-- Indicates that the given JavaScript file is a part of a group-->
+        <!ELEMENT js (#PCDATA)>
+<!-- Indicates that the given CSS file is a part of a group-->
+        <!ELEMENT css (#PCDATA)>
+<!-- Dependencies definition. Indicates that the current group depends on another one, which therefore must be included too -->
+        <!ELEMENT group-ref (#PCDATA)>
+        ]>
+<jso>
+
+	<default key="conflictRule" value="append"/>
+
+    <group name="sweetdevria-ext">
+        <js>/resources/js/Externs/yui/yahoo.js</js> 
+        <js>/resources/js/Externs/yui/event.js</js> 
+        <js>/resources/js/Externs/yui/dom.js</js> 
+        <js>/resources/js/Externs/yui/dragdrop.js</js> 
+        <!--js>/resources/js/Externs/yui/log.js</js--> 
+        <js>/resources/js/Externs/yui/calendar.js</js> 
+        <js>/resources/js/Externs/yui/tabview.js</js> 
+        <js>/resources/js/Externs/yui/animation-min.js</js> 
+        <!--js>/resources/js/Externs/yaaw/vel2jstools.js</js-->
+        <!--js>/resources/js/Externs/template.js</js-->
+        <js>/resources/js/Externs/template-r.js</js>
+		<js>/resources/js/Externs/Json/json2.js</js> 
+    </group>
+
+    <group name="sweetdevria-core">
+    	<js>/resources/js/Core/SweetDevRiaInitialization.js</js>
+        <js>/resources/js/Externs/Log4Js.js</js>
+        <css>/resources/css/sweetdev-ria-core.css</css>
+        <css>/resources/css/sweetdev-ria-default-skin.css</css>
+        
+        <js>/resources/js/Helpers/StringHelper.js</js> 
+        <js>/resources/js/Helpers/MessageHelper.js</js> 
+        <js>/resources/js/Helpers/DomHelper.js</js> 
+        <js>/resources/js/Helpers/Browser.js</js>  
+        
+        <js>/resources/js/Log/SweetDevRia_Log4Js.js</js> 
+        <js>/resources/js/Log/RIATimer.js</js> 
+        <js>/resources/js/Event/EventHelper.js</js> 
+        <js>/resources/js/Display/DisplayManager.js</js> 
+        
+        <js>/resources/js/Event/EventStack.js</js>
+        <js>/resources/js/Event/ActiveManager.js</js> 
+        
+        <js>/resources/js/Ajax/Ajax.js</js> 
+        <js>/resources/js/Ajax/AjaxPooler.js</js> 
+        <js>/resources/js/Ajax/ComHelper.js</js> 
+        <js>/resources/js/DragDrop/MultiSelect.js</js> 
+           
+        <js>/resources/js/Core/SweetDevRia.js</js> 
+        
+        <js>/resources/js/Display/Hooking.js</js>
+        <js>/resources/js/Event/RiaEvent.js</js> 
+        <js>/resources/js/Event/EventManager.js</js> 
+        <js>/resources/js/Event/KeyListener.js</js>
+        
+        <js>/resources/js/Core/SweetDevRiaProxy.js</js> 
+        <js>/resources/js/Core/RiaComponent.js</js> 
+        
+        <js>/resources/js/DragDrop/NewDragDrop.js</js> 
+        <js>/resources/js/DragDrop/DragDropZone.js</js> 
+        <js>/resources/js/DragDrop/DropZone.js</js> 
+       
+       	<js>/resources/js/Components/TabLayout.js</js> 
+       
+       	<js>/resources/js/Components/FrameNude.js</js>
+        <js>/resources/js/Components/Frame.js</js>
+        <js>/resources/js/Components/Button.js</js>
+        
+        <js>/resources/js/Helpers/DateFormat.js</js> 
+        
+        <js>/resources/js/Core/Array.js</js>
+        
+        <js>/resources/js/Core/Context.js</js>      
+        
+        <!-- Collapse -->
+        <js>/resources/js/Components/Collapse/Collapse.js</js>
+        <js>/resources/js/Components/Collapse/CollapseManager.js</js>
+        
+        <js>/resources/js/Display/LayoutManager.js</js> 
+        <js>/resources/js/Display/PopupManager.js</js> 
+        <js>/resources/js/Components/ClickToOpen.js</js> 
+        <js>/resources/js/Components/EditableText.js</js> 
+        <js>/resources/js/Components/Editable.js</js> 
+        <js>/resources/js/Components/Tooltip.js</js> 
+        
+        <js>/resources/js/Components/List.js</js> 
+        <js>/resources/js/Components/Reader.js</js> 
+
+        <!-- Form -->
+        <js>/resources/js/Components/Forms/Control.js</js> 
+        <js>/resources/js/Components/Forms/Form.js</js> 
+        <js>/resources/js/Components/Forms/Mandatory.js</js> 
+        <js>/resources/js/Components/Forms/Messenger.js</js> 
+
+        <js>/resources/js/Components/Tree/Tree.js</js> 
+        <js>/resources/js/Components/Tree/TreeNode.js</js> 
+
+        <js>/resources/js/Components/PageBar.js</js>
+        <js>/resources/js/Components/Grid.js</js>  
+        <js>/resources/js/Components/GridSize.js</js>   
+        
+        <js>/resources/js/Ajax/ExportExcel.js</js>
+        <js>/resources/js/Ajax/DownloadResources.js</js>
+        
+        <js>/resources/js/Components/ModalPanel.js</js> 
+        <js>/resources/js/Components/WaitingMessage.js</js> 
+        <js>/resources/js/Components/Alert.js</js> 
+        <js>/resources/js/Components/Calendar/BaseCalendar.js</js> 
+        <js>/resources/js/Components/Calendar/SimpleCalendar.js</js> 
+        <js>/resources/js/Components/Calendar/StandAloneCalendar.js</js> 
+        <js>/resources/js/Components/Calendar/DateRangeCalendar.js</js> 
+        <js>/resources/js/Components/Calendar/MultiCalendarGroup.js</js> 
+        <js>/resources/js/Components/Zone.js</js> 
+        <js>/resources/js/Components/Accordion.js</js> 
+        <js>/resources/js/Components/FileUpload.js</js> 
+     	<js>/resources/js/Components/Menu/Menu.js</js>
+     	<js>/resources/js/Components/Menu/MenuBar.js</js>
+     	<js>/resources/js/Components/Menu/ContextMenu.js</js>
+     	<js>/resources/js/Components/Menu/MenuItem.js</js>
+    	<js>/resources/js/Components/Suggest.js</js>
+        <js>/resources/js/Components/Spliter.js</js> 
+        <js>/resources/js/Components/Tabbox.js</js> 
+        <js>/resources/js/Components/Window.js</js> 
+        <js>/resources/js/Components/WindowDocking.js</js> 
+        
+    </group>
+
+    <group name="sweetdevria-all-complete" minimize="false">
+        <group-ref>sweetdevria-ext</group-ref>
+        <group-ref>sweetdevria-core</group-ref>
+    </group>
+    
+    <group name="sweetdevria-all-min">
+        <group-ref>sweetdevria-ext</group-ref>
+        <group-ref>sweetdevria-core</group-ref>
+    </group>
+    
+    
+
+</jso>

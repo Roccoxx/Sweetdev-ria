@@ -1,0 +1,4 @@
+<div id="${id}_frame_container" style="#if(${canDrag})position:absolute;#end">
+	#if(${contentId}=="")
+		<div id="${id}_container" style="float:left;width:auto;#if(${style})${style}#end" #if(${styleClass})class="${styleClass}"#end>
+	#end

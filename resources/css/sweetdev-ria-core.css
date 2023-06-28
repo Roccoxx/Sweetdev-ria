@@ -1,0 +1,1774 @@
+/** ------------------------------------
+ * SweetDEV RIA library
+ * Copyright [2006 - 2010] [Ideo Technologies]
+ * ------------------------------------
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * 		http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For more information, please contact us at:
+ *         Ideo Technologies S.A
+ *        124 rue de Verdun
+ *        92800 Puteaux - France
+ *
+ *      France & Europe Phone : +33 1.46.25.09.60
+ *
+ *
+ *        web : http://www.ideotechnologies.com
+ *        email : SweetDEV-RIA@ideotechnologies.com
+ *
+ *
+ * @version 3.5.2.1
+ * @author Ideo Technologies
+ */ /************** Calendar ***************/
+.ideo-cal-main {
+	border-spacing: 0;
+	border-collapse: separate;
+}
+
+.ideo-cal-main .calheader {
+	position: relative;
+	width: 100%;
+}
+
+.ideo-cal-main td.calcell {
+	width: 1.5em;
+	height: 1em;
+}
+
+.ideo-cal-main.calrowhead {
+	border-right-width: 2px;
+}
+
+.ideo-cal-main .calseparator {
+	height:10px;
+}
+
+.ideo-cal-multiCalSeparator {
+	float:left !important;
+}
+
+
+/*Specific changes for calendar running under fonts/reset */
+.ideo-cal-main a:hover {
+	background: inherit;
+}
+
+/* Calendar header : navigation */
+.ideo-cal-main .calnavleft, .ideo-cal-main .calnavright {
+	position: absolute;
+	background-repeat: no-repeat;
+	top: 0;
+	height: 17px;
+}
+
+.ideo-cal-main .calnavleft {
+	left: 4px;
+}
+
+.ideo-cal-main .calnavright {
+	right: 4px;
+}
+
+/* end */ /*Footer*/
+.ideo-cal-footer {
+	clear: both !important;	
+}
+
+.ideo-cal-container {
+	float: left !important;
+}
+
+.ideo-cal-container .ideo-cal-displayTableWrap {
+	float: left !important;
+}
+
+.ideo-cal-main .ideo-cal-cellStandalone{
+	cursor: default;	
+}
+
+/* Multi-month*/
+.ideo-cal-calWrapper {
+/*	overflow: hidden;*/
+}
+
+.ideo-cal-calWrapper { *
+	height: 1%;
+}  /* IE */
+.ideo-cal-calWrapper:after {
+	content: '.';
+	clear: both;
+	display: block;
+	visibility: hidden;
+	height: 0;
+}  /* others */
+	/************************ ClickToOpen **************************/
+.ideo-cto-main {
+	display: none;
+	position: absolute !important;
+}
+
+.ideo-cto-content {
+	overflow: auto;
+}
+
+.ideo-cto-closeIcon,.ideo-cto-closeIconHover,.ideo-cto-closeIconDown {
+	display: block;
+	width: 14px;
+	height: 14px;
+	right: 4px;
+}
+
+/****************** NewWindow *************************/
+.ideo-win-main {
+	position: absolute;
+	padding: 0px;
+	margin: 0px;
+
+
+	/* reseting some values */
+	text-align: left;
+	font-weight: normal;
+	font-style: normal;
+}
+
+.ideo-win-main .ideo-win-invWndPanel {
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+	margin: 0px;
+	z-index: 1;
+	background-color: green;
+	filter: alpha(opacity = 0);
+	-moz-opacity: 0;
+	opacity: 0;
+	display: none;
+}
+
+.ideo-win-main .ideo-win-title {
+	white-space: nowrap;
+	/*cursor : default;*/
+	overflow: hidden;
+	position: relative;
+	z-index: 3;
+	height: 20px;
+}
+
+.ideo-win-main .ideo-win-titleLabel {
+	white-space: nowrap;
+	overflow: hidden;
+	margin-left: 25px;
+	margin-right: -25px;
+	display : inline;
+}
+
+.ideo-win-titleIcon{
+	float:left;
+}
+
+.ideo-win-main .ideo-win-panel {
+	position: relative;
+	width: 100%;
+	overflow: auto;
+	z-index: 3;
+}
+
+.ideo-win-main .ideo-win-corner {
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	cursor: NW-resize;
+	width: 16px;
+	height: 16px;
+	background-repeat: no-repeat;
+	overflow: hidden;
+	z-index: 3;
+}
+
+.ideo-win-main .ideo-win-cornerDisabled {
+	display: none;
+}
+
+.ideo-win-main .ideo-win-stateBar {
+	width: 100%;
+	z-index: 3;
+}
+
+.ideo-win-main .ideo-win-minIcon,.ideo-win-main .ideo-win-maxIcon,.ideo-win-main .ideo-win-closeIcon,.ideo-win-main .ideo-win-minRestoreIcon,.ideo-win-main .ideo-win-maxRestoreIcon
+	{
+	position: absolute;
+	top: 1px;
+	width: 16px;
+	height: 14px;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	overflow: hidden;
+	border: 0px none;
+}
+
+.ideo-win-main .ideo-win-menuIcon{
+	cursor: move;	
+}
+
+.ideo-win-main .ideo-win-minIcon {
+	right: 36px;
+}
+
+.ideo-win-main .ideo-win-maxIcon {
+	right: 20px;
+}
+
+.ideo-win-main .ideo-win-closeIcon {
+	right: 0px;
+}
+
+.ideo-win-main .ideo-win-minRestoreIcon {
+	right: 36px;
+}
+
+.ideo-win-main .ideo-win-maxRestoreIcon {
+	right: 20px;
+}
+
+/* Borders for d&d */
+.ideo-win-main .borderN,.ideo-win-main .borderS,.ideo-win-main .borderE,.ideo-win-main .borderW,.ideo-win-main .borderNEH,.ideo-win-main .borderNEV,.ideo-win-main .borderNWH,.ideo-win-main .borderNWV,.ideo-win-main .borderSEH,.ideo-win-main .borderSEV,.ideo-win-main .borderSWH,.ideo-win-main .borderSWV
+	{
+	position: absolute;
+	z-index: 3;
+	overflow: hidden;
+	background-color: blue;
+	filter: alpha(opacity = 0);
+	-moz-opacity: 0;
+	opacity: 0;
+}
+
+.ideo-win-main .borderN,.ideo-win-main .borderS {
+	height: 3px;
+	cursor: N-resize;
+	width: 100%;
+}
+
+.ideo-win-main .borderE,.ideo-win-main .borderW {
+	width: 3px;
+	cursor: E-resize;
+	height: 100%;
+}
+
+.ideo-win-main .borderN {
+	top: 0px;
+	left: 0px;
+}
+
+.ideo-win-main .borderS {
+	bottom: 0px;
+	left: 0px;
+}
+
+.ideo-win-main .borderE {
+	top: 0px;
+	bottom: 0px;
+	right: 0px;
+}
+
+.ideo-win-main .borderW {
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+}
+
+.ideo-win-main .borderDisabled {
+	display: none;
+}
+
+.ideo-win-main .borderNEH,.ideo-win-main .borderNEV,.ideo-win-main .borderNWH,.ideo-win-main .borderNWV,.ideo-win-main .borderSEH,.ideo-win-main .borderSEV,.ideo-win-main .borderSWH,.ideo-win-main .borderSWV
+	{
+	z-index: 3;
+}
+
+.ideo-win-main .borderNEH,.ideo-win-main .borderNWH,.borderSEH,.ideo-win-main .borderSWH
+	{
+	height: 3px;
+}
+
+.ideo-win-main .borderNEV,.ideo-win-main .borderNWV,.borderSEV,.ideo-win-main .borderSWV
+	{
+	width: 3px;
+}
+
+.ideo-win-main .borderNEV,.ideo-win-main .borderNEH {
+	cursor: NE-resize;
+}
+
+.ideo-win-main .borderNWV,.ideo-win-main .borderNWH {
+	cursor: NW-resize;
+}
+
+.ideo-win-main .borderSEV,.ideo-win-main .borderSEH {
+	cursor: SE-resize;
+}
+
+.ideo-win-main .borderSWV,.ideo-win-main .borderSWH {
+	cursor: SW-resize;
+}
+
+.ideo-win-main .borderNEH {
+	right: 0px;
+	top: 0px;
+	width: 16px;
+}
+
+.ideo-win-main .borderNEV {
+	right: 0px;
+	top: 0px;
+	height: 16px;
+}
+
+.ideo-win-main .borderNWH {
+	left: 0px;
+	top: 0px;
+	width: 16px;
+}
+
+.ideo-win-main .borderNWV {
+	left: 0px;
+	top: 0px;
+	height: 16px;
+}
+
+.ideo-win-main .borderSEH {
+	right: 0px;
+	bottom: 0px;
+	width: 16px;
+}
+
+.ideo-win-main .borderSEV {
+	right: 0px;
+	bottom: 0px;
+	height: 16px;
+}
+
+.ideo-win-main .borderSWH {
+	left: 0px;
+	bottom: 0px;
+	width: 16px;
+}
+
+.ideo-win-main .borderSWV {
+	left: 0px;
+	bottom: 0px;
+	height: 16px;
+}
+
+/* end borders */
+.ideo-win-main .ideo-win-invPanel {
+	position: absolute;
+	width: 100%;
+	height: 0px;
+	background-color: blue;
+	z-index: 1;
+	filter: alpha(opacity = 0);
+	-moz-opacity: 0;
+	opacity: 0;
+}
+
+.ideo-win-main .ideo-win-menuIcon {
+	left: 0px;
+}
+
+.ideo-win-main .ideo-win-invWnd {
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+	margin: 0px;
+	z-index: 1;
+	border: 1px solid black;
+	display: block;
+}
+
+.ideo-win-main .ideo-win-invWndDiv {
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+	margin: 0px;
+	z-index: 2;
+	display: block;
+	background-color: white;
+	/* background-color is mandatory to dragdrop nested window !!*/
+}
+
+.ideo-win-main .ideo-win-dockingSpacer {
+	position: relative;
+	width: 100%;
+	background-color: blue;
+	height: 20px;
+	overflow: hidden;
+	display: none;
+	filter: alpha(opacity = 0);
+	-moz-opacity: 0;
+	opacity: 0;
+}
+
+/********************** Menu ************************************/
+ul.ideo-mnu-main,ul.ideo-mnu-main ul {
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+	list-style-type: none;
+	position: absolute;
+}
+
+ul.ideo-mnu-main li {
+	list-style-type: none;
+	list-style-position: outside;
+	white-space: nowrap;
+/*	padding-left: 20px; */
+	padding-right: 20px;
+}
+
+ul.ideo-mnu-main ul {
+	display: none;
+	left: 100%;
+}
+
+ul.ideo-mnu-main div {
+	position: absolute;
+	right: 0px;
+	overflow: hidden;
+	display: inline;
+}
+
+ul.ideo-mnu-main li.ideo-mnu-check {
+	background-repeat: no-repeat;
+}
+
+ul.ideo-mnu-main img.ideo-mnu-itemIcon {
+	width:16px;
+	height:16px;
+}
+
+/************* Menu Bar *************/
+ul.ideo-mnb-main {
+	background-color: #D3D3D3;
+	border-color: white black black white;
+	border-style: solid;
+	border-width: 1px;
+	cursor: default;
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+ul.ideo-mnb-main li.ideo-mnb-main {
+	display: inline;
+	padding-left: 10px;
+	padding-right: 10px;
+	position: relative;
+}
+
+ul.ideo-mnb-main>li:hover {
+	background-color: #00008B;
+	color: white;
+}
+
+ul.ideo-mnb-main li.iehovermenubar {
+	background-color: #00008B;
+	color: white;
+}
+
+ul.ideo-mnb-main  ul.ideo-mnb-firstLevel {
+	left: 0px;
+	top: 100%;
+	display: none;
+}
+
+ul.ideo-mnb-main  li  ul {
+	left: 100%;
+}
+
+ul.ideo-mnb-main>li:hover>ul { /*    display : block;*/
+	
+}
+
+ul.ideo-mnb-main li.iehovermenubar ul.ideo-mnb-root {
+	/*    display : block;*/
+	
+}
+
+/****************************** SPliter *******************************/
+.ideo-vsp-main {
+	float: left;
+	height: 100%;
+	cursor: E-resize;
+	overflow: hidden;
+}
+
+.ideo-hsp-main {
+	width: 100%;
+	cursor: N-resize;
+	overflow: hidden;
+}
+
+.ideo-vsp-zone {
+	overflow: auto;
+}
+
+.ideo-vsp-zone { 
+	position: relative;
+}  /* IE */
+.ideo-hsp-zone {
+	overflow: auto;
+}
+
+/******************** EditableText **********************/
+.ideo-edi-main {
+	display: inline;
+}
+
+
+.ideo-edit-editable {
+}
+
+.ideo-edit-updated {
+}
+
+.ideo-ctrl-invalid {
+}
+
+/******************** Tabbox *****************************/
+	/* All styling orignal informations have been kept for Yahoo core tabbox */
+.yui-navset .yui-content {
+	border: 1px solid #ccc;
+}
+
+.yui-navset .yui-nav .selected a,.yui-navset .yui-nav a:hover {
+	background-color: #fff;
+}
+
+.yui-navset .yui-nav li a {
+	background: #e5e5e5 url(../images/tabbox/round_4px_trans_gray.gif)
+		no-repeat;
+}
+
+.yui-navset .yui-nav li a em {
+	background: transparent url(../images/tabbox/round_4px_trans_gray.gif)
+		no-repeat top right;
+	padding: 0.5em;
+}
+
+/* top oriented */
+.yui-navset-top .yui-nav {
+	margin-bottom: -1px;
+}  /* for overlap, based on content border-width */
+.yui-navset-top .yui-nav li a {
+	border-bottom: 1px solid #ccc;
+}
+
+.yui-navset-top .yui-nav .selected a {
+	border-bottom: 0;
+}
+
+.yui-navset-top .yui-nav .selected a em {
+	padding-bottom: 0.6em;
+}  /* adjust height */ /* top & bottom oriented */
+.yui-navset-top .yui-nav li a em,.yui-navset-bottom .yui-nav li a em {
+	/*margin-left: 4px;  based on border-radius */
+	padding-right: 8px;
+	/* based on border-radius (2x left to balance margin) */
+	padding-left: 4px;
+	text-align: center;
+}
+
+/* bottom oriented */
+.yui-navset-bottom .yui-nav {
+	margin-top: -1px;
+}  /* for overlap, based on content border-width */
+.yui-navset-bottom .yui-nav li a {
+	border-top: 1px solid #ccc;
+}
+
+.yui-navset-bottom .yui-nav .selected a {
+	border-top: 0;
+}
+
+.yui-navset-bottom .yui-nav .selected a em {
+	padding-top: 0.6em;
+}  /* adjust height */
+.yui-navset-bottom .yui-nav li a {
+	background-position: bottom left;
+}
+
+.yui-navset-bottom .yui-nav li a em {
+	background-position: bottom right;
+}
+
+/* left oriented */
+.yui-navset-left .yui-content {
+	margin-left: -1px;
+}  /* for overlap, based on content border-width */
+.yui-navset-left .yui-nav li a {
+	border-right: 1px solid #ccc;
+	padding-bottom: 4px;
+}
+
+.yui-navset-left .yui-nav li a em,.yui-navset-right .yui-nav li a em {
+	padding-top: 8px;
+	/* based on border-radius (2x left to balance margin) */
+}
+
+.yui-navset-left .yui-nav .selected a {
+	border-right: 0;
+}
+
+.yui-navset-left .yui-nav .selected a em {
+	padding-left: 0.6em;
+}  /* adjust width */
+.yui-navset-left .yui-nav li a {
+	background-position: bottom left;
+}
+
+.yui-navset-left .yui-nav li a em {
+	background-position: top left;
+}
+
+/* right oriented */
+.yui-navset-right .yui-content {
+	margin-right: -1px;
+}  /* for overlap, based on content border-width */
+.yui-navset-right .yui-nav li a {
+	border-left: 1px solid #ccc;
+	padding-bottom: 4px;
+}
+
+.yui-navset-right .yui-nav .selected a {
+	border-left: 0;
+}
+
+.yui-navset-right .yui-nav .selected a em {
+	padding-left: 0.6em;
+}  /* adjust width */
+.yui-navset-right .yui-nav li a {
+	background-position: bottom right;
+}
+
+.yui-navset-right .yui-nav li a em {
+	background-position: top right;
+}
+
+/* default space between tabs */
+.yui-navset .yui-nav li {
+	margin-right: 0.5em; /* horizontal tabs */
+}
+
+.yui-navset-left .yui-nav li,.yui-navset-right .yui-nav li {
+	margin: 0 0 0.5em; /* vertical tabs */
+}
+
+/* default width for side tabs */
+.yui-navset-left .yui-nav,.yui-navset-right .yui-nav {
+	width: 6em;
+}
+
+.yui-navset-left {
+	padding-left: 6em;
+}  /* map to nav width */
+.yui-navset-right {
+	padding-right: 6em;
+}  /* ditto */ /* core */
+.yui-nav,.yui-nav li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.yui-navset li em {
+	font-style: normal;
+}
+
+.yui-navset {
+	position: relative; /* contain absolute positioned tabs (left/right) */
+	zoom: 1;
+}
+
+.yui-navset .yui-content {
+	zoom: 1;
+}
+
+.yui-navset .yui-nav li {
+	display: inline-block;
+	display: -moz-inline-stack; *
+	display: inline; /* IE */
+	vertical-align: bottom; /* safari: for overlap */
+	cursor: pointer; /* gecko: due to -moz-inline-stack on anchor */
+	zoom: 1; /* IE: kill space between horizontal tabs */
+}
+
+.yui-navset-left .yui-nav li,.yui-navset-right .yui-nav li {
+	display: block;
+}
+
+.yui-navset .yui-nav a {
+	outline: 0; /* gecko: keep from shifting */
+}
+
+.yui-navset .yui-nav a {
+	position: relative;
+}  /* IE: to allow overlap */
+.yui-navset .yui-nav li a {
+	display: block;
+	display: inline-block;
+	vertical-align: bottom; /* safari: for overlap */
+	zoom: 1;
+}
+
+.yui-navset-left .yui-nav li a,.yui-navset-right .yui-nav li a {
+	display: block;
+}
+
+.yui-navset-bottom .yui-nav li a {
+	vertical-align: text-top;
+	/* for inline overlap (reverse for Op border bug) */
+}
+
+.yui-navset .yui-nav li a em {
+	display: block;
+}
+
+/* position left and right oriented tabs */
+.yui-navset-left .yui-nav,.yui-navset-right .yui-nav {
+	position: absolute;
+	z-index: 1;
+}
+
+.yui-navset-left .yui-nav {
+	left: 0;
+}
+
+.yui-navset-right .yui-nav {
+	right: 0;
+}
+
+.ideo-tab-closeImg {
+	background-repeat: no-repeat;
+}
+
+
+/************************  pagebar  *************************/
+.ideo-pgb-pagebar {
+	bottom: 0px;
+	text-align: center;
+}
+
+.ideo-pgb-pagebar .ideo-pgb-actualPageNumber {
+	
+}
+
+.ideo-pgb-pagebar .ideo-pgb-pageNumber {
+	
+}
+
+.ideo-pgb-backward, .ideo-pgb-backwardLast, .ideo-pgb-forward, .ideo-pgb-forwardLast{
+    float:left;
+	cursor : hand;
+}
+
+.ideo-pgb-pagebar  a{
+    float:left;
+}
+
+.ideo-pgb-pagebar a img {
+	border:none;
+}
+
+
+/************************  grid  *************************/
+.ideo-ndg-table {
+	position: relative;
+	z-index : 3;  /*cause by panel */
+	/* reseting values */
+	text-align: left;
+	font-weight: normal;
+	font-style: normal;
+}
+
+.ideo-ndg-table-resizable {
+	margin-bottom : 18px;
+}
+
+.ideo-ndg-table .ideo-ndg-divHeader {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+}
+
+.ideo-ndg-table .ideo-ndg-head {
+	width: 100%;
+	table-layout: fixed;
+}
+
+.ideo-ndg-table .ideo-ndg-header {
+	
+}
+
+.ideo-ndg-table .ideo-ndg-headerEditableDiv {
+	display: inline;
+	width: 17px;
+	height: 16px;
+}
+
+.ideo-ndg-table .ideo-ndg-headerEditable {
+
+
+}
+
+.ideo-ndg-table .ideo-ndg-header input {
+	border: 0px;
+}
+
+.ideo-ndg-table .ideo-ndg-headerSort {
+	display: inline;
+	width: 17px;
+	height: 16px;
+}
+
+.ideo-ndg-table .ideo-ndg-headerSortDesc {
+	
+}
+
+.ideo-ndg-table .ideo-ndg-headerSortAsc {
+	
+}
+
+.ideo-ndg-table .ideo-ndg-arrow {
+	position : absolute;
+	display : none;
+}
+
+.ideo-ndg-table tr { /*    background-color : white; */
+	
+}
+
+.ideo-ndg-table td {
+	overflow: hidden;
+}
+
+.ideo-ndg-table .ideo-ndg-detail {
+	
+}
+
+.ideo-ndg-table .ideo-ndg-oddRow {
+	
+}
+
+.ideo-ndg-table .ideo-ndg-oddRow input {
+}
+
+.ideo-ndg-table .ideo-ndg-row {
+	
+}
+
+.ideo-ndg-table .ideo-ndg-parRow {
+	
+}
+
+.ideo-ndg-table .ideo-ndg-selection {
+	
+}
+
+.ideo-ndg-table .ideo-ndg-cell {
+
+}
+
+.ideo-ndg-table .ideo-ndg-headSeparator {
+	width: 2px;
+}
+
+.ideo-ndg-table .ideo-ndg-headSeparatorNoResize {
+	width: 2px;
+}
+
+.ideo-ndg-table .ideo-ndg-divBody {
+	width: 100%;
+	overflow: auto;
+}
+
+.ideo-ndg-table .ideo-ndg-body {
+	width: 100%;
+	table-layout: fixed;
+	border-collapse: collapse;
+}
+
+.ideo-ndg-table .ideo-ndg-bodySeparator {
+	width: 2px;
+}
+
+.ideo-ndg-table .ideo-ndg-resizer {
+	width: 18px;
+	height: 18px;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+}
+
+.ideo-ndg-row{
+	width: 100%;
+	border-collapse: collapse;
+}
+ 	
+.ideo-ndg-cell{
+	padding: 0;
+}
+
+/* Windows */
+.ideo-ndg-winFieldSet {
+	width: auto;
+	/* reseting values */
+	text-align: left;
+	font-weight: normal;
+	font-style: normal;
+}
+
+DIV.ideo-ndg-waitingMessage {
+	position: absolute;
+	display: none;
+}
+
+.ideo-ndg-activatorManager{
+	position: absolute;
+	top:1px;
+	left:1px;
+	z-index:-2;
+	
+	text-decoration: none; 
+}
+
+.ideo-ndg-checkList {
+	list-style-type:none;
+	margin-top:0;
+	padding-left:0;
+}
+
+
+.ideo-ndg-legend {
+	color:black;
+}
+
+/************************  alert  *************************/
+	/* Waiting message class */
+.ideo-alt-zoneMain {
+	position: absolute;
+	display: none;
+}
+
+.ideo-alt-message {
+	
+}
+
+.ideo-alt-icon {
+	float: left;
+}
+
+.ideo-alt-buttonBar {
+	
+}
+
+.ideo-alt-button {
+	
+}
+
+/************************  tree  *************************/
+.ideo-tre-folder {
+	vertical-align : center;
+}
+
+.ideo-tre-collapseNode .ideo-tre-folder {
+	
+}
+
+.ideo-tre-expandNode .ideo-tre-folder {
+	
+}
+
+.ideo-tre-file {
+	vertical-align : center;
+}
+
+.ideo-tre-iconLine {
+	
+}
+
+.ideo-tre-dropOnFolder {
+	
+}
+
+.ideo-tre-dropAtFirst {
+	
+}
+
+.ideo-tre-dropAtLast {
+	
+}
+
+.ideo-tre-dropBetween {
+	
+}
+
+.ideo-tre-plus {
+	
+}
+
+.ideo-tre-plusLast {
+	
+}
+
+.ideo-tre-minus {
+	
+}
+
+.ideo-tre-minusLast {
+	
+}
+
+.ideo-tre-normal {
+	
+}
+
+.ideo-tre-normalLast {
+	
+}
+
+.ideo-tre-li {
+	white-space: nowrap;
+	cursor: pointer;
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+}
+
+div.ideo-tre-box li.iehover {
+	background-color: red;
+}
+
+.ideo-tre-nodeA {
+	text-decoration: none;
+	color: black;	
+	cursor : pointer;
+}
+
+
+.ideo-tre-images {
+	border: 0pt none;
+	margin: 0pt;
+	padding: 0pt;
+	width: 16px;
+
+	height:100%;
+	vertical-align:middle;
+}
+
+.ideo-tre-indent {
+	background-repeat: repeat-y;
+	background-position: center;
+}
+
+.ideo-tre-selected .ideo-tre-node {
+}
+
+.ideo-tre-selected .ideo-tre-label {
+}
+
+.ideo-tre-label {
+	
+}
+
+.ideo-tre-label-treeGrid {
+	cursor:default;
+}
+
+.ideo-tre-lastRootChild {
+	height: 15px;
+}
+
+.ideo-tre-children {
+	margin: 0pt;
+	padding: 0pt;
+	zoom: 1;
+}
+
+.ideo-tre-box {
+	cursor: pointer;
+	text-align: left;
+}
+
+/************************  collapse  *************************/ /**
+ * This class is apply to collapse header
+ */
+.ideo-clp-header {
+	
+}
+
+.ideo-clp-headerNoContent {
+
+}
+
+/**
+ * This class is apply to collapse header when  it s expanded
+ */
+.ideo-clp-header-exp {
+	
+}
+
+/**
+ * This class is apply to collapse header when  it s collapsed
+ */
+.ideo-clp-header-col {
+	
+}
+
+/**
+ * This class is apply to collapse body
+ */
+.ideo-clp-body {
+	
+}
+
+/**
+ * This class is apply to collapse body when  it s expanded
+ */
+.ideo-clp-body-exp {
+	
+}
+
+/**
+ * This class is apply to collapse body when  it s collapsed
+ */
+.ideo-clp-body-exp {
+	
+}
+
+.ideo-clp-bottom-left {
+	float:left;
+}
+.ideo-clp-bottom-right {
+	float:right;
+}
+
+.ideo-clp-topBorder, .ideo-sug-topBorder {
+	height:6px;
+	position:relative;
+}
+.ideo-clp-topBorderLeft, .ideo-sug-topBorderLeft {
+	position:absolute;
+	top:0px;
+	left:0px;
+	width: 6px;
+	height: 6px;
+}
+.ideo-clp-topBorderCenter, .ideo-sug-topBorderCenter {
+	position:relative;
+	height: 6px;
+	margin:0 6px 0 6px;
+}
+.ideo-clp-topBorderCenterImg, .ideo-sug-topBorderCenterImg {
+	height:6px;
+	line-height: 6px;/* IE fix */
+	width:100%;
+	position:absolute;
+	top:0px;
+	left:0px;
+}
+.ideo-clp-topBorderRight, .ideo-sug-topBorderRight {
+	position:absolute;
+	top:0px;
+	right:0px;
+	width: 6px;
+	height: 6px;
+}
+
+
+/************************  draggdrop  *************************/
+.ideo-dd-container {
+/*	background-color: white;*/
+	filter: alpha(opacity = 90);
+	-moz-opacity: 0.9;
+	opacity: 0.9;
+	border: 0px solid #DDDDDD;
+}
+
+.ideo-dd-fake {
+	position: relative;
+}
+
+.ideo-dd-clone {
+}
+
+.ideo-dd-icon {
+	width: 20px;
+	float: left;
+}
+
+/************************  list  *************************/ /**
+ * This class is apply to ul tag containing all items li
+ */
+.ideo-lst-ul {
+	list-style-type: none;
+	padding-left: 0px;
+	margin: 0px;
+	
+}
+
+/**
+ * This class is apply to each li tag containing an item
+ */
+.ideo-lst-li {
+	list-style-position: outside;
+}
+
+/**
+ * This class is apply to list containing all items
+ */
+.ideo-lst-list {
+	overflow: hidden;
+	scroll: auto;
+}
+
+/**
+ * This class is apply to each item
+ */
+.ideo-lst-item {
+	display: block;
+	cursor: pointer;
+}
+
+/**
+ * This class is apply to the hover item
+ */
+.ideo-lst-item:hover {
+}
+
+/**
+ * This class hide windows and menu container to avoir blank space
+ */
+.ideo-lst-hiddenContainer {
+	display: none;	
+}
+
+/**
+ * This class is apply to the pagebar component of the list
+ */
+.ideo-lst-pagebar {
+	width: 100%;
+	overflow: hidden;
+}
+
+/************************  messenger  *************************/ /**
+ * This class is apply to a component on error
+ */
+.ideo-msg-error {
+	
+}
+
+/**
+ * This class is apply to a component label when it's on error
+ */
+.ideo-msg-labelError {
+	color: red;
+}
+
+/**
+ * This class is apply to messenger icon for an error message
+ */
+.ideo-msg-iconError {
+	zoom : 1;
+	padding-left:16px;
+}
+
+/**
+ * This class is apply to messenger icon for an non error message
+ */
+.ideo-msg-iconNotError {
+	zoom : 1;
+	margin-left : 16px;
+	padding-left : 16px;
+}
+
+/******************************** ******************************/
+
+/* Displaying acronym on IE */
+acronym {
+	border-bottom: 1px dotted black;
+}
+
+/************************  suggest  *************************/ /**
+ * This class is apply to the suggest input element
+ */
+.ideo-sug-input {
+	
+}
+
+/**
+ * This class is apply to the item list ul
+ */
+ul.ideo-sug-items {
+	list-style-type: none;
+	left: 0px;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	overflow-x: hidden;
+	overflow-y: visible;
+}
+
+div.ideo-sug-items {
+	left: 0px;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	overflow-x: hidden;
+	overflow-y: auto;
+	background: white;
+}
+
+
+/**
+ * This class is apply to each li item 
+ */
+.ideo-sug-items li {
+	list-style-type: none;
+	padding-bottom: 0px;
+}
+
+/**
+ * This class is apply to each li item 
+ */
+a.ideo-sug-item {
+	padding-bottom: 2px;
+	padding-left: 5px;
+	white-space: nowrap;
+}
+
+/**
+ * This class is apply to each 'a' item
+ */
+.ideo-sug-item {
+	text-decoration: none;
+	display: block;
+}
+
+.ideo-sug-popup {
+	position: absolute;
+	display: none;
+	margin: 0;
+	padding: 0;
+	overflow: visible;
+}
+
+.ideo-sug-header {
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+
+.ideo-sug-footer {
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+
+.ideo-sug-buttonOut,.ideo-sug-buttonOver,.ideo-sug-buttonDown,.ideo-sug-buttonLoading
+	{
+	background-repeat: no-repeat;
+	border: 0pt none;
+	vertical-align: middle;
+	height: 20px;
+	margin: 0pt;
+	width: 16px;
+	cursor: pointer;
+	display: inline;
+}
+
+.ideo-sug-hiddenItem {
+	display : none;
+}
+
+.ideo-sug-main .ideo-sug-bottomRight{
+	position:absolute;
+	top:0px;
+	right:0px;
+	width:6px;
+	height:10px;
+}
+
+.ideo-sug-main .ideo-sug-bottomCenter{
+	left:6px;
+	margin-right: 6px;
+}
+
+.ideo-sug-main .ideo-sug-bottomLeft{
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:6px;
+	height:10px;
+}
+
+.ideo-sug-main .ideo-sug-bottomBorderContainer{
+	position:relative;
+	font-size:8px;
+}
+
+.ideo-sug-main .ideo-but-main .ideo-sug-headerLeft{
+	padding:0 0 0 8px;	
+}
+.ideo-sug-main .ideo-but-main .ideo-sug-headerRight{
+	padding:0 8px 0 0;		
+}
+
+/********************* ModalPanel *********************/ /* ie6 */
+
+.ideo-lm-iframeMask {
+	position : absolute;
+	top : 0px;
+	left : 0px;
+	width : 100%;
+	height : 100%;
+}
+
+
+.ideo-mp-iframe {
+	filter: alpha(opacity = 0);
+	opacity: 0;
+}
+
+.ideo-mp-main {
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+	margin: 0px;
+	filter: alpha(opacity = 50);
+	-moz-opacity: 0.5;
+	opacity: 0.5;
+	background-color: gray;
+}
+
+/************************** Tabbox *******************************/
+	/* These definitions override the yahoo ones, to provide an easier customization */
+	/* Main css style surrounding the tabbox */
+.ideo-tab-main {
+	
+}
+
+/* Content style of the tabbox main container */
+.ideo-tab-main .ideo-tab-content {
+	overflow: auto;
+}
+
+/************************** Schedule *******************************/
+DIV.ideo-schedule-hSplit {
+	left: 0pt;
+	position: absolute;
+	width: 100%;
+	z-index: 1;
+}
+
+DIV.ideo-schedule-hSplitEven {
+	border-top: 1px solid #CCCCCC;
+}
+
+DIV.ideo-schedule-hSplitOdd {
+	border-top: 1px dotted #DDDDDD;
+}
+
+DIV.ideo-schedule-hSplitHour {
+	border-top: 1px solid #999999;
+}
+
+DIV.ideo-schedule-vSplit {
+	position: absolute;
+	top: 0pt;
+	/*border-left:3px double #DDDDDD !important;*/
+	z-index: 1;
+	width: 3px;
+	background-color: #DDDDDD;
+}
+
+DIV.ideo-schedule-headerCell {
+	position: absolute;
+	top: 0pt;
+	z-index: 1;
+}
+
+DIV.ideo-schedule-header {
+	position: relative;
+	overflow: hidden;
+}
+
+DIV.ideo-schedule-grid {
+	position: relative;
+	overflow-x: hidden;
+	overflow-y: scroll; 
+}
+
+DIV.ideo-schedule-multiGrid {
+	position: relative;
+	overflow: hidden;
+	margin-top: 1ex;
+}
+
+DIV.ideo-schedule-event {
+	position: absolute;
+	background-color: gray;
+	z-index: 2;
+	overflow: hidden;
+}
+
+DIV.ideo-schedule-resizerHour {
+	cursor: n-resize;
+	height: 1ex;
+	text-align: center;
+	background-color: gray;
+}
+
+DIV.ideo-schedule-resizerDay {
+	cursor: e-resize;
+	height: 100%;
+	width: 1ex;
+	text-align: center;
+	background-color: gray;
+}
+
+DIV.ideo-schedule-tooltip {
+	position: absolute;
+	background-color: LightYellow;
+	border: 1px solid black;
+	font-size: x-small;
+	overflow: hidden;
+}
+
+DIV.ideo-schedule-event-tooltip {
+	position: absolute;
+	background-color: white;
+	border: 1px black solid;
+}
+
+/************************** Border *******************************/
+
+.ideo-bdr-borders {
+
+}
+
+
+DIV.ideo-bdr-main {
+	font-size:1px;
+	position:absolute;
+	z-index:2;
+	zoom: 1;
+}
+
+DIV.ideo-bdr-north {
+	cursor:n-resize;
+}
+
+DIV.ideo-bdr-south {
+	cursor:s-resize;
+}
+
+DIV.ideo-bdr-east {
+	cursor:e-resize;
+}
+
+DIV.ideo-bdr-west {
+	cursor:w-resize;
+}
+
+DIV.ideo-bdr-northeast {
+	cursor:ne-resize;
+}
+
+DIV.ideo-bdr-northwest {
+	cursor:nw-resize;
+}
+
+DIV.ideo-bdr-southeast {
+	cursor:se-resize;
+}
+
+DIV.ideo-bdr-southwest {
+	cursor:sw-resize;
+}
+
+
+/************************** Button *******************************/
+/****************** http://www.babylon-design.com/exemples/boutons-extensibles/ *********************/
+
+.ideo-but-main{
+	display:-moz-inline-box;
+	display:inline-block;
+	margin:0;
+	padding:0;
+	white-space:nowrap;
+	text-align:center;
+	text-decoration: none;
+	vertical-align:middle;
+	border:0;
+	background:none;/* //TODO ? */
+}
+
+.ideo-but-main .ideo-but-left{
+	float:left; /* Mandatory of the button depends on the text height */
+	vertical-align:middle;
+}
+
+.ideo-but-main .ideo-but-right{
+	float:left; /*Mandatory of the button depends on the text height */
+}
+
+.ideo-but-main .ideo-but-center{
+	float:left; /*Mandatory of the button depends on the text height */
+}
+
+.ideo-but-main .ideo-but-right-FF{
+	float:none;
+	display:block; 
+}
+
+.ideo-but-main .ideo-but-center-FF{
+	float:none;
+	display:block; 
+}
+
+/******************** TabLayout ********************/
+.ideo-tbl-main{
+	
+}
+
+.ideo-tbl-main:after{
+	content: "";
+	display: block;
+	clear: both;
+}
+
+/* Default properties */
+.ideo-tbl-removable{
+	border: 0;	
+}
+
+/* default : inactive */
+.ideo-tbl-tabHeader-top, .ideo-tbl-tabHeader-bottom {
+	position: relative;
+	float:left;
+}
+
+.ideo-tbl-headersContainer{
+	overflow: hidden;	
+}
+
+.ideo-tbl-contentsContainer:after{
+	content: "";
+	display: block;
+	clear: both;	
+}
+
+.ideo-tbl-contentsContainer{
+	overflow: scroll;
+}
+
+/* default : inactive */
+.ideo-tbl-tabHeaderCenter-top, .ideo-tbl-tabHeaderCenter-bottom{
+	position: relative;
+	float:left;
+}
+
+/**
+* Class of the div set just before a tab header
+*/
+.ideo-tbl-tabHeaderBefore-top, .ideo-tbl-tabHeaderBefore-bottom{
+	position: relative;
+	float: left;
+}
+
+/**
+* Class of the div set just after a tab header
+*/
+.ideo-tbl-tabHeaderAfter-top, .ideo-tbl-tabHeaderAfter-bottom{
+	position: relative;
+	float: left;
+}
+
+.ideo-tbl-active{
+	text-align: center;
+	top:2px;
+	margin-top: 0px;
+}
+
+.ideo-tbl-headerLink{
+
+}
+
+/**
+ * Orientation of the headers zone
+ */
+ 
+.ideo-tbl-headers-top{
+}
+
+.ideo-tbl-contents-top{
+}
+
+.ideo-tbl-headers-bottom{
+}
+
+.ideo-tbl-contents-bottom{
+}
+
+.ideo-tbl-headers-left{
+	float: left;
+}
+
+.ideo-tbl-contents-left{
+	float: left;
+}
+
+.ideo-tbl-headers-right{
+	float: right;
+}
+
+.ideo-tbl-contents-right{
+	float: left;
+}
+
+.ideo-hwd-container{
+	width : 200px;
+	height : 50px;
+	text-align : center;
+	vertical-align: middle;
+	border: 1px dotted black;	
+}

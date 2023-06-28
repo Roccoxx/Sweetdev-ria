@@ -1,0 +1,3 @@
+#if(${title})<div class="ideo-rdr-title">${title}</div>#end
+<div id="${id}_container" class="ideo-rdr-container"></div>
+<div id="pagebar_${id}_container" class="ideo-pgb-pagebar" style="margin-left:auto;margin-right:auto;width:80px"></div>

@@ -1,0 +1,219 @@
+#set( $isTreeGrid = (!((! $model.treeGridModel) && ("$!model.treeGridModel" == ""))) )
+
+
+
+  <script type="text/javascript">
+
+	SweetDevRia.startLog ("Log.BeforeGrid", {"id":"${id}", "className":"SweetDevRia.Grid"});
+
+	#if ($isTreeGrid)
+											   #set( $treeModel = $model.treeGridModel )
+	   new SweetDevRia.Tree ("${treeModel.id}");
+	   #foreach ($type in $treeModel.nodeTypes)
+		      SweetDevRia.$("${treeModel.id}").addNodeType($type.toJSONString());	
+	   #end
+	   SweetDevRia.$("${treeModel.id}").isTreeGrid = true;
+	   SweetDevRia.$("${treeModel.id}").gridId = "${id}";
+	   SweetDevRia.$("${treeModel.id}").displayRoot = ${treeModel.displayRoot};
+	   SweetDevRia.$("${treeModel.id}").setRootData ($treeModel.toJSONString());//must be done after the nodeType initialization
+	#end
+
+	new SweetDevRia.Grid("${id}");
+	SweetDevRia.$("${model.id}").i18n={};
+	#foreach( $key in $i18n.keySet() )
+   	SweetDevRia.$("${model.id}").i18n["$key"] = "$i18n.get($key)";
+	#end
+	SweetDevRia.$("${model.id}").i18n["detailLinkLabel"] = "${model.detailLinkLabel}";
+
+	##if (!((! $model.groupBy) && ("$!model.groupBy" == "")))
+		##   SweetDevRia.$("${id}").setGroupBy ([#foreach ($id in ${model.groupBy})#if ($velocityCount>0),#end "$id" #end]);
+	###end
+
+	#if ($isTreeGrid)
+		   SweetDevRia.$("${id}").isTreeGrid = ${isTreeGrid};
+		   SweetDevRia.$("${id}").treeModelId = "${model.treeGridModel.id}";
+	#end
+	
+	SweetDevRia.$("${id}").columnsAtPosition = new Array(${model.columnsModel.size()});
+	
+	#set( $hasEditableCol = false )
+	#foreach ($col in $model.columnsModel)
+			   SweetDevRia.$("${id}").addColumnAtPosition ("$col.id", "${col.label}", "$col.width", #if ((! $col.sortAscendant) && ("$!col.sortAscendant" == ""))null , null #else $col.sortAscendant, $col.sortOrder #end,  $col.visible,  $col.resizable,  $col.sortable,  $col.hideable,  $col.editable, $col.defaultModel.position, $col.position, #if ((! $col.formatter) && ("$!col.formatter" == ""))null #else "$col.formatter" #end, #if(${col.styleClass})"${col.styleClass}"#else null #end, #if(${col.style})"${col.style}"#else null #end);
+		   #if ($col.editable)
+			      #set( $hasEditableCol = true )
+			      SweetDevRia.$("${id}").setEditableProperties ("$col.id",
+   				      #if ((! $col.type) && ("$!col.type" == ""))null #else "$col.type" #end,
+				         #if ((! $col.maskPattern) && ("$!col.maskPattern" == ""))null #else "$col.maskPattern" #end,
+   				      #if ((! $col.charPattern) && ("$!col.charPattern" == ""))null #else "$col.charPattern" #end,
+				         #if ((! $col.maskMessage) && ("$!col.maskMessage" == ""))null #else "$col.maskMessage" #end,
+				         #if ((! $col.charMessage) && ("$!col.charMessage" == ""))null #else "$col.charMessage" #end,
+				         #if ((! $col.maskMessageType) && ("$!col.maskMessageType" == ""))null #else "$col.maskMessageType" #end,
+				         #if ((! $col.charMessageType) && ("$!col.charMessageType" == ""))null #else "$col.charMessageType" #end,
+				         #if ((! $col.formatter) && ("$!col.formatter" == ""))null #else "$col.formatter" #end,
+				         #if (! $col.listOptions) null #else JSON.parse('${col.getListOptionsJSON()}') #end
+			      );
+		   #end	
+	#end	
+
+	SweetDevRia.$("${id}").setSelectionMode(${model.selectionMode});
+	
+	SweetDevRia.$("${id}").showPropertyButton = ${showPropertyButton};
+	SweetDevRia.$("${id}").showExportButton = ${showExportButton};
+	#if (! $isTreeGrid)
+		   SweetDevRia.$("${id}").setDisplayCheckbox(${rowSelectable});
+	#end
+
+	SweetDevRia.$("${id}").rowSelectorType = ${rowSelectorType};
+
+	#set($rowDisplayed = ${model.getDisplayedRowModels()})
+	SweetDevRia.$("${id}").setTotalDataNumber(${model.getSize()});
+	SweetDevRia.$("${id}").setInitializedData(${model.getJSONData($rowDisplayed)});
+	SweetDevRia.$("${id}").setTooltips(${model.getJSONTooltips($rowDisplayed)});
+	SweetDevRia.$("${id}").setTotalDataNumber(${model.size});
+	SweetDevRia.$("${id}").setHeightHeader(${heightHeader});
+	
+	#if (!((! $minWidth) && ("$!minWidth" == "")))
+		SweetDevRia.$("${id}").setMinWidth(${minWidth});
+	#end
+	#if (!((! $maxWidth) && ("$!maxWidth" == "")))
+		SweetDevRia.$("${id}").setMaxWidth(${maxWidth});
+	#end
+	#if (!((! $width) && ("$!width" == "")))
+		SweetDevRia.$("${id}").setWidth("${width}");
+	   	#if (!((! $minWidth) && ("$!minWidth" == "")))
+	   		SweetDevRia.$("${id}").setMinWidth(${minWidth});
+		   	if (parseInt("${width}") < ${minWidth}) {
+				SweetDevRia.$("${id}").setWidth("${minWidth}");
+		   	}
+		#end
+		#if (!((! $maxWidth) && ("$!maxWidth" == "")))
+		   	SweetDevRia.$("${id}").setMaxWidth(${maxWidth});
+		   	if (parseInt("${width}") > ${maxWidth}) {
+				SweetDevRia.$("${id}").setWidth("${maxWidth}");
+		   	}
+		#end
+	#end
+	
+	#if (!((! $minHeight) && ("$!minHeight" == "")))
+		SweetDevRia.$("${id}").setMinHeight(${minHeight});
+	#end
+	#if (!((! $maxHeight) && ("$!maxHeight" == "")))
+	   SweetDevRia.$("${id}").setMaxHeight(${maxHeight});
+	#end
+	#if (!((! $height) && (("$!height" == "")||("$height" == "null"))))
+	   SweetDevRia.$("${id}").setHeight("${height}");
+	   	#if (!((! $minHeight) && ("$!minHeight" == "")))
+		   if (parseInt("${height}") < ${minHeight}) {
+		   		SweetDevRia.$("${id}").setHeight("${minHeight}");
+		   	}
+		#end
+		#if (!((! $maxHeight) && ("$!maxHeight" == "")))
+		   if (parseInt("${height}") > ${maxHeight}) {
+		   		SweetDevRia.$("${id}").setHeight("${maxHeight}");
+		   }
+		#end
+	#end
+
+	#if (!((! $constraintId) && ("$!constraintId" == "")))
+	   SweetDevRia.$("${id}").setConstraintId("${constraintId}");
+	#end
+	
+	SweetDevRia.$("${id}").columnsInPercent = ${model.areInPercent};
+
+
+	#if (!((! $onSortColumn) && (("$!onSortColumn" == "")||("$onSortColumn" == "null"))))SweetDevRia.$("${id}").onSortColumn=function(){${onSortColumn};};#end
+	#if (!((! $onSelectRow) && (("$!onSelectRow" == "")||("$onSelectRow" == "null"))))SweetDevRia.$("${id}").onSelectRow=function(){${onSelectRow};};#end
+	#if (!((! $onUnselectRow) && (("$!onUnselectRow" == "")||("$onUnselectRow" == "null"))))SweetDevRia.$("${id}").onUnselectRow=function(){${onUnselectRow};};#end
+	#if (!((! $onSelectCell) && (("$!onSelectCell" == "")||("$onSelectCell" == "null"))))SweetDevRia.$("${id}").onSelectCell=function(){${onSelectCell};};#end
+	#if (!((! $onUnselectCell) && (("$!onUnselectCell" == "")||("$onUnselectCell" == "null"))))SweetDevRia.$("${id}").onUnselectCell=function(){${onUnselectCell};};#end
+	#if (!((! $onSetData) && (("$!onSetData" == "")||("$onSetData" == "null"))))SweetDevRia.$("${id}").onSetData=function(){${onSetData};};#end
+	#if (!((! $onShowColumn) && (("$!onShowColumn" == "")||("$onShowColumn" == "null"))))SweetDevRia.$("${id}").onShowColumn=function(){${onShowColumn};};#end
+	#if (!((! $onHideColumn) && (("$!onHideColumn" == "")||("$onHideColumn" == "null"))))SweetDevRia.$("${id}").onHideColumn=function(){${onHideColumn};};#end
+	#if (!((! $onCheckRow) && (("$!onCheckRow" == "")||("$onCheckRow" == "null"))))SweetDevRia.$("${id}").onCheckRow=function(){${onCheckRow};};#end
+	#if (!((! $onUncheckRow) && (("$!onUncheckRow" == "")||("$onUncheckRow" == "null"))))SweetDevRia.$("${id}").onUncheckRow=function(){${onUncheckRow};};#end
+	#if (!((! $onResize) && (("$!onResize" == "")||("$onResize" == "null"))))SweetDevRia.$("${id}").onResize=function(){${onResize};};#end
+	#if (!((! $onMoveColumn) && (("$!onMoveColumn" == "")||("$onMoveColumn" == "null"))))SweetDevRia.$("${id}").onMoveColumn=function(){${onMoveColumn};};#end
+	#if (!((! $onChangePage) && (("$!onChangePage" == "")||("$onChangePage" == "null"))))SweetDevRia.$("${id}").onChangePage=function(){${onChangePage};};#end
+
+		
+	#if (!((! $heightRow) && ("$!heightRow" == "")))
+	   SweetDevRia.$("${id}").setHeightRow(${heightRow});
+	#end
+	SweetDevRia.$("${id}").setResizable(${resizable});//do it after set height, or fail if not resizable
+	SweetDevRia.$("${id}").setMinColumnWidth(${model.minimalColumnWidth});
+	#if (! $isTreeGrid)
+		   SweetDevRia.$("${id}").setRowPerPage(${model.rowPerPage});
+		   SweetDevRia.$("${id}").actualPage = ${model.pageNumber};
+	#end
+	SweetDevRia.$("${id}").rowWrap = ${rowWrap};
+
+	SweetDevRia.$("${id}").canChangeItemPerPage = ${canChangeItemPerPage};
+	SweetDevRia.$("${id}").showTotalPageNumber = ${showTotalPageNumber};
+	SweetDevRia.$("${id}").pageBarMode = ${pageBarMode};
+	SweetDevRia.$("${id}").showTopPageBarIfNeeded = ${showTopPageBarIfNeeded};
+
+	
+	#if(${model.exportable})
+		   SweetDevRia.$("${id}").innerExportId = '${model.innerExportId}';
+		
+		   #if(${model.innerExportMode})
+			      SweetDevRia.$("${id}").innerExportMode = ${model.innerExportMode};
+			      SweetDevRia.$("${id}").innerOnlyChecked = ${model.innerOnlyChecked};
+		   #end
+	#end
+
+	SweetDevRia.$("${id}").checkedRows = [#set($sep="")#foreach($rowId in $model.rowsCheckedIds)${sep} "$rowId"#set($sep=",")#end]; 
+	
+	#if (!${frameDisplayed})
+		   SweetDevRia.$("${id}").createFrame = function(){
+		       return new SweetDevRia.FrameNude("${id}_nude_frame",true);
+		   };
+		
+		   SweetDevRia.$("${id}").getFrame = function(){
+		       return SweetDevRia.$("${id}_nude_frame");
+		   };
+	#end
+	
+	SweetDevRia.endLog ("Log.BeforeGrid", {"id":"${id}", "className":"SweetDevRia.Grid"});
+	##SWTRIA-967
+	SweetDevRia.EventHelper.addListener("body", "load", SweetDevRia.$("${id}").loadRows, SweetDevRia.$("${id}"), true );
+
+#foreach($groupcol in $model.drawGroupContent())
+	  SweetDevRia.$("${id}").addGroup("$groupcol.id","$groupcol.label",[#foreach ($child in ${groupcol.children})#if ($velocityCount>0),#end "$child.id" #end]);
+#end
+
+SweetDevRia.$("${id}").render();
+
+#if (!((! $model.groupBy) && ("$!model.groupBy" == "")))
+	SweetDevRia.$("${id}").setGroupBy ([#foreach ($id in ${model.groupBy})#if ($velocityCount>0),#end "$id" #end]);
+#end
+
+##SWTRIA-1115 : code supprime
+##SweetDevRia.$("${id}").updateColumnsSize();
+
+#if ($isTreeGrid)
+	SweetDevRia.EventHelper.addPostLoadListener(window, function() {
+		SweetDevRia.$("${id}").testIfScrollBarNeeded(false);
+    });
+#end
+</script>
+
+#if ($hasEditableCol)
+	   #set( $id = "${id}_dateEdit" )	
+	   #set( $mode = "simple" )
+	   #set( $field = "single" )
+	   #set( $javaScriptObject = "SweetDevRia.SimpleCalendar" )
+	   #set( $displayedMonths = 1 )
+	   #set( $cancelBubble = true )
+	   #set( $popup = true )
+	   #set( $velocityLoopIds = ["${id}Cal"] )
+	   #set( $dateMonths = [ "Janvier", "F\\u00e9vrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Ao\\u00fbt", "Septembre", "Octobre", "Novembre", "D\\u00e9cembre"] )
+	   #set( $dateWeeksBeginOnMonday = 1 )
+	   <div id="${id}DivParent" style="display:none;">
+	   <div id="${id}Div">
+	   #parse("velocity/template/calendar/calendar_start.vm")
+	   <img src="${imgPath}/calendar.gif" class="calendarIcon" alt="Calendar" />
+	   #parse("velocity/template/calendar/calendar_end.vm")
+	   </div>
+	   </div>
+#end

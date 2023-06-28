@@ -1,0 +1,13 @@
+<script type="text/javascript">
+	new SweetDevRia.Zone("${id}", ${loadAtStartup}, #if (!((! $url) && ("$!url" == "")))"${url}" #else null#end, ${refreshDelay}, #if (!((! $addInputs) && ("$!addInputs" == "")))"${addInputs}" #else null#end);
+	#if (${onLoad})
+		SweetDevRia.$("${id}").onLoaded = function(){${onLoad}};
+	#end
+	
+	#if (${afterOnCallServer})
+		   SweetDevRia.$("${id}").afterOnCallServer = function(){${afterOnCallServer};};
+	#end
+	
+</script>
+<div id="${id}" #if (${style})style="${style}"#end  #if (${styleClass})class="${styleClass}"#end >
+<!-- start ria:zone ${id} -->

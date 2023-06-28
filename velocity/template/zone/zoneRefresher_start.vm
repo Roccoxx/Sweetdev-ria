@@ -1,0 +1,1 @@
+<span #if(${id}) id="${id}" #end onclick="#if(${multiRefresh})SweetDevRia.Zone.refreshZones('${zoneId}'); #else SweetDevRia.$('${zoneId}').callServer( #if(${url}) '${url}' #end ); #end" #if (${style})style="${style}"#end  #if (${styleClass})class="${styleClass}"#end >

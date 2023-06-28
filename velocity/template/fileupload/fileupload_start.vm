@@ -1,0 +1,80 @@
+	<script type="text/javascript">
+		new SweetDevRia.FileUpload ("${id}");
+		SweetDevRia.$("${id}").stillUploadingText = "${i18n.stillUploading}";
+		#if(${simpleFilter} && ${simpleFilter} != "") 
+			SweetDevRia.$("${id}").setSimpleFilter("${simpleFilter}");
+		#end 	
+		#if(${regexpFilter} && ${regexpFilter} != "") 
+			SweetDevRia.$("${id}").setRegexpFilter("${regexpFilter}");
+		#end 
+		#if(${index} && ${index} >= 0) 
+			SweetDevRia.$("${id}").index="${index}";
+		#end 
+		#if(${name} && ${name} != "") 
+			SweetDevRia.$("${id}").name="${name}";
+		#end 
+	</script>
+	#if(${generateForm}==true)
+	<form method="post" target="${id}_iframe" enctype="multipart/form-data">
+	#end
+		<input type="hidden" name="__RiaPageId" value="${pageContext.request.getAttribute('__RiaPageId')}"/>
+	
+		#if(${label}) 
+			<label for="${id}" 
+				#if(${labelStyle}) 
+					style="${labelStyle}"
+				#end
+			>${label}</label>
+		#end
+
+		#if(${index} && ${index} >= 0) 
+			<input type="hidden" id="${id}_index" value="${index}"/>
+		#else 
+			<input type="hidden" id="${id}_index"/>
+		#end
+
+		#if(${value})
+			<input id="${id}" name="${id}" 
+			#if(${style}) 
+				style="${style};display:none;" 
+			#else
+				style="display:none" 
+			#end 
+			type="file" onchange="SweetDevRia.$('${id}').upload();" 
+			#if(${size}) 
+				size="${size}"
+			#end
+			/>
+			<input type="text" disabled id="${id}_text" value="${value}"/>
+			&nbsp<span class="ideo-fu-dellink" id="${id}_link" onclick="SweetDevRia.$('${id}').deleteFile();">${deleteText}</span>
+		#else
+			<input id="${id}" name="${id}" 
+			#if(${style}) 
+				style="${style}" 
+			#end 
+			type="file" onchange="SweetDevRia.$('${id}').upload();" 
+			#if(${size}) 
+				size="${size}" 
+			#end
+			/>
+			<span id="${id}_text_container"
+			#if(${style}) 
+				style="${style};display:none;" 
+			#else
+				style="display:none" 
+			#end
+			>
+			<input type="text" disabled id="${id}_text" /><img id="${id}_link" src="${imgPath}/pix.gif" class="ideo-fu-deleteButton" alt="${deleteText}" title="${deleteText}" onclick="SweetDevRia.$('${id}').deleteFile();"/>
+			</span>
+		#end
+		
+		
+		<iframe style="display:none;" src="about:blank" name="${id}_iframe" id="${id}_iframe"></iframe>
+		
+		<script type="text/javascript">
+			SweetDevRia.DomHelper.get('${id}_iframe').src = SweetDevRia.DisplayManager.getInstance().getBlankPage();
+		</script>
+
+#if(${generateForm}==true)
+	</form>
+#end

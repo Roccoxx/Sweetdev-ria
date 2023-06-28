@@ -1,0 +1,39 @@
+	#set( $layoutModel = $model )
+	#foreach( $tab in $model.dynamicTabContents )
+		#set( $model = $tab.model )
+		
+		#parse("velocity/template/tabLayout/tabContent_start.vm")
+		
+		#parse("velocity/template/tabLayout/tabContent_end.vm")
+	#end
+	#set( $model = $layoutModel )
+	
+	</div>
+	
+	#if($orientation=="bottom")
+		<div id="${id}_headers_container" class="ideo-tbl-headersContainer ${headerClass}" style="height:${headerSize};"></div>
+	#end
+	
+	<script type="text/javascript">
+		
+	SweetDevRia.$("${model.id}").i18n={};
+	#foreach( $key in $i18n.keySet() )
+    	SweetDevRia.$("${model.id}").i18n["$key"] = "$i18n.get($key)";
+	#end
+		
+		#foreach( $tab in $model.tabContents )
+			#if(!$tab.removed)
+			SweetDevRia.$("${model.id}").buildAndRegisterTab($tab.toJSONString());
+			#end
+		#end
+	
+		SweetDevRia.$("${model.id}").renderHeaders();
+		
+		#if(${model.selectedId})
+			SweetDevRia.$("${model.id}").selectOnLoadId = "${model.selectedId}";
+		#end
+	</script>	
+</div>
+
+<div id="${id}_menu_container">
+</div>

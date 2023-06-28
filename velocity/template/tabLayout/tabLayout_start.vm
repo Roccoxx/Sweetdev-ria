@@ -1,0 +1,29 @@
+#if($orientation=="left" || $orientation=="right")
+	#if(${width})
+		#set( $adjustedWidth = $this.getAdjustedWidth() )
+	#end	
+#else
+	#if(${width})
+		#set( $adjustedWidth = $width )
+	#end
+#end
+
+#set( $headerClass = "ideo-tbl-headers-$orientation" )
+#set( $contentClass = "ideo-tbl-contents-$orientation" )
+
+<div id="${id}_container" class="ideo-tbl-main" style="#if(${width})width:${adjustedWidth};#end${style}" class="${styleClass}">
+
+	<script type="text/javascript">
+		var layout = new SweetDevRia.TabLayout("${id}");
+		layout.orientation = "${orientation}";
+	</script>
+	
+	#if($orientation!="bottom")
+		#if($orientation=="top")
+			<div id="${id}_headers_container" class="ideo-tbl-headersContainer ${headerClass}" style="height:${headerSize};width:100%;"></div>
+		#else
+			<div id="${id}_headers_container" class="ideo-tbl-headersContainer ${headerClass}" style="width:${headerSize};#if(${height})height:${height};#end"></div>
+		#end
+	#end
+	
+	<div id="${id}_contents_container" class="ideo-tbl-contentsContainer ${contentClass} #if(${styleClass})${styleClass}#end" style="#if(${adjustedWidth})width:${width};#end#if(${height})height:${height};#if(${style})${style}#end#end">

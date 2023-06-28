@@ -1,0 +1,7 @@
+<script type="text/javascript">
+var activeContext = SweetDevRia.ContextManager.getInstance().getActiveContext();
+function exportExcel(){
+	SweetDevRia_exportExcel('${id}', null, null, activeContext);
+}
+</script>
+<span onclick="exportExcel()" #if(${style})style="${style}"#end #if(${styleClass})class="${styleClass}" #end>

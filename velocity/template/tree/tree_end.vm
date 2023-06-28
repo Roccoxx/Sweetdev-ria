@@ -1,0 +1,21 @@
+<script type="text/javascript">
+	new SweetDevRia.Tree ("${model.id}");
+	
+	SweetDevRia.$("${model.id}").i18n={};
+	#foreach( $key in $i18n.keySet() )
+    	SweetDevRia.$("${model.id}").i18n["$key"] = "$i18n.get($key)";
+	#end
+	
+	#foreach ($type in $model.nodeTypes)
+		SweetDevRia.$("${model.id}").addNodeType($type.toJSONString());	
+	#end
+	SweetDevRia.$("${model.id}").canAdd = ${model.canAdd};
+	SweetDevRia.$("${model.id}").canDelete = ${model.canDelete};
+	SweetDevRia.$("${model.id}").canModify = ${model.canModify};
+	SweetDevRia.$("${model.id}").nodeHeight = ${model.nodeHeight};
+	SweetDevRia.$("${model.id}").displayRoot = ${model.displayRoot};
+	SweetDevRia.$("${model.id}").setRootData ($model.toJSONString());//must be done after the nodeType initialization
+	SweetDevRia.$("${model.id}").render ();
+	
+
+</script>

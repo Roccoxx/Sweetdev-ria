@@ -1,0 +1,29 @@
+<!--[if IE]><link rel="stylesheet" href="${cssPath}/iehack.css" type="text/css"/><![endif]-->
+
+<script type="text/javascript">//<![CDATA[	
+	var RIA_GLOBAL_START = new Date ();
+	var RIA_RESOURCES_START = new Date ();
+
+
+	var SweetDevRIAContextPath = "${contextPath}"; ## like /sweetdev-ria-dev
+	var SweetDevRIAPath = "${serverPath}"+SweetDevRIAContextPath; ## like http://localhost:8080/sweetdev-ria-dev, used by ajax servlet url
+
+	var SweetDevRIAResourcesServerUrl = "${propertiesServerUrl}"; ## like http://myApache:9090/sweetdev-ria-resources, used by resources folders
+
+	#if(${portletToken} && ! ${propertiesServerUrl})
+		var SweetDevRIAImagesPath = PTPortlet.getPortletByID(${portletToken}).transformURL("${imgPath}");
+		var SweetDevRIACssPath = PTPortlet.getPortletByID(${portletToken}).transformURL("${cssPath}");
+		var SweetDevRIAJsPath = PTPortlet.getPortletByID(${portletToken}).transformURL("${jsPath}");
+	#else
+		var SweetDevRIAImagesPath = "${imgPath}";
+		var SweetDevRIACssPath = "${cssPath}";
+		var SweetDevRIAJsPath = "${jsPath}";
+	#end
+
+	var SweetDevRIAJSPPath = "${jspPath}";
+
+	var SweetDevRIASynchro = "${synchroMode}";
+	var ${pageIdVar} = "${pageName}";
+	var SweetDevRIAHttpsMode = ${https};
+
+//]]></script>

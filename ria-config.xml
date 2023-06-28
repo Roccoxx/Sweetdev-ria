@@ -1,0 +1,363 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE ria-config [
+        <!ELEMENT ria-config (property*, message-resources*, builders?,drawers?)>
+        <!ELEMENT builders (builder+)>
+		<!ELEMENT drawers (drawer+)>
+		<!ELEMENT drawer (set-property+)>
+		<!ELEMENT property EMPTY>
+		<!ELEMENT message-resources EMPTY>
+		<!ELEMENT set-property EMPTY>
+
+		<!ATTLIST property
+                key ID #REQUIRED>
+		<!ATTLIST property
+                value CDATA #REQUIRED>
+
+        <!ATTLIST message-resources
+                parameter CDATA #REQUIRED>
+        <!-- Should null be returned if the key has not been found -->
+        <!ATTLIST message-resources
+                null (true|false) "false">
+        <!ATTLIST message-resources
+                key ID #REQUIRED>
+                
+        <!ATTLIST builder 
+                id ID #REQUIRED>
+        <!ATTLIST builder 
+                drawer IDREF #REQUIRED>
+        <!ATTLIST builder 
+                modelControllerClass CDATA #IMPLIED>
+              
+        <!ATTLIST drawer 
+                id ID #REQUIRED>  
+                
+        <!ATTLIST set-property 
+                property CDATA #REQUIRED>
+        <!ATTLIST set-property
+                value CDATA #REQUIRED>
+                
+        <!ATTLIST property 
+                key ID #REQUIRED>
+        <!ATTLIST property
+                value CDATA #REQUIRED>
+		]>
+<ria-config>
+
+	<!-- This property must be defined in the project to target the resources path : whether a distant server or the local context path (/MyProject)
+	<property key="sweetdev-ria.resources.server.url" value="http://myLocalhost:9090/sweetdev-ria-resources"/>
+	-->
+
+	<!-- resources : path from the sweetdev-ria.resources.server.url value if it's specify, else from contextPath -->
+	<property key="sweetdev-ria.resources.path" value="/resources"/>
+	
+	<!-- path from sweetdev-ria.resources.path -->
+	<property key="sweetdev-ria.javascript.path" value="/js"/>
+	<property key="sweetdev-ria.css.path" value="/css"/>
+	<property key="sweetdev-ria.images.path" value="/images"/>
+	<property key="sweetdev-ria.jsp.path" value="/jsp"/>
+	
+	<!-- Internationalization : getting message from key inside RIA components attributes -->
+	<!-- <property key="sweetdev-ria.i18n.ressourceManagerClass" value="Add here your class which extends ResourcesManager"/> -->
+
+	<!-- Default resourcesImport complete group -->
+	<property key="sweetdev-ria.resourcesImport.jso.group.complete" value="sweetdevria-all-complete"/>
+	<!-- Default resourcesImport minimized group -->
+	<property key="sweetdev-ria.resourcesImport.jso.group.minimized" value="sweetdevria-all-min"/>
+
+	<!-- Default way to target a user : the session id 
+	Implements com.ideo.sweetdevria.page.user.ISessionUserGetter
+	-->
+	<property key="sweetdev-ria.session.user.getter" value="com.ideo.sweetdevria.page.user.DefaultSessionUserGetter"/>
+	
+	<!-- 
+	Default styling file
+	Permits to avoid setting it in every resourcesImport.
+	/resources/css/sweetdev-ria-default-skin.css by default. -->
+	<!-- <property key="sweetdev-ria.css.defaultSkin" value="/resources/css/sweetdev-ria-default-skin.css"/> -->
+
+	<!--
+	Default type for the page name propagate.
+	Set it to true to propagate by default the actual page name, reusing the model in session page after page.
+	Set it to false to generate a new page name if no one is set in the ria:resourcesImport tag
+	 -->
+	<property key="sweetdev-ria.resourcesImport.propagatePageName" value="false"/>
+
+	<!-- Grid Excel Export -->
+	<property key="sweetdev-ria.export.defaultTypeFormatterClass" value="com.ideo.sweetdevria.taglib.grid.export.formatter.typeFormatter.DefaultTypeFormatterImpl"/>
+
+	<!-- 
+	Default persistence controller class.
+	Permits to avoid setting it in every grid. 
+	None by default. -->
+	<!-- <property key="sweetdev-ria.grid.defaultPersistanceController" value="com.ideo.sweetdevria.taglib.grid.persistance.IGridPersistanceController"/> -->
+	
+	<!-- FileUpload -->
+	<property key="sweetdev-ria.fileupload.uploadPath" value="upload"/>
+
+
+	<!-- Size of velocity buffer -->
+	<property key="sweetdev-ria.buffer.size" value="1048576"/>
+
+	<property key="sweetdev-ria.i18n.locale" value="en"/>
+
+	<message-resources parameter="sweetdev-ria-i18n" null="false" key="i18n"/>
+	<message-resources parameter="sweetdev-ria-excel" null="false" key="excel"/>
+
+
+	<builders>
+		<builder id="tooltip.link.builder" drawer="tooltip-link-drawer" />
+		<builder id="tooltip.content.builder" drawer="tooltip-content-drawer" />
+		<builder id="calendar.builder" drawer="calendar-drawer" />
+		<builder id="combomulti.builder" drawer="combomulti-drawer" />		
+		<builder id="newwindow.builder" drawer="newwindow-drawer" />
+		<builder id="editabletext.builder" drawer="editabletext-drawer"  modelControllerClass="com.ideo.sweetdevria.taglib.editableText.model.editableTextModel" />
+		<builder id="fileupload.builder" drawer="fileupload-drawer"  modelControllerClass="com.ideo.sweetdevria.taglib.fileUpload.model.FileUploadModel" />
+		<builder id="spliterlayout.builder" drawer="spliterlayout-drawer" />
+		<builder id="spliterlayout.column.builder" drawer="spliterlayout-column-drawer" />
+		<builder id="spliterlayout.cell.builder" drawer="spliterlayout-cell-drawer" />
+		<builder id="dockinglayout.builder" drawer="dockinglayout-drawer" />
+		<builder id="tabbox.builder" drawer="tabbox-drawer" />
+		<builder id="tabs.builder" drawer="tabs-drawer" />
+		<builder id="tab.builder" drawer="tab-drawer" />
+		<builder id="tabpanels.builder" drawer="tabpanels-drawer" />
+		<builder id="tabpanel.builder" drawer="tabpanel-drawer" />
+		<builder id="menu.builder" drawer="menu-drawer" />
+		<builder id="contextmenu.builder" drawer="contextmenu-drawer" />
+		<builder id="menubar.builder" drawer="menubar-drawer" />
+		<builder id="zone.builder" drawer="zone-drawer" />
+		<builder id="zoneRefresher.builder" drawer="zoneRefresher-drawer" />
+		<builder id="accordion.builder" drawer="accordion-drawer" />
+		<builder id="accordionitem.builder" drawer="accordionitem-drawer" />
+		<builder id="list.builder" drawer="list-drawer" />
+		<builder id="control.builder" drawer="control-drawer" />
+		<builder id="collapse.builder" drawer="collapse-drawer" />
+		<builder id="collapseHeader.builder" drawer="collapseHeader-drawer" />
+		<builder id="collapseManager.builder" drawer="collapseManager-drawer" />
+		<builder id="action.builder" drawer="action-drawer" />
+		<builder id="mandatoryControl.builder" drawer="mandatoryControl-drawer" />
+		<builder id="mandatory.builder" drawer="mandatory-drawer" />
+		<builder id="messenger.builder" drawer="messenger-drawer" />
+		<builder id="message.builder" drawer="message-drawer" />
+		<builder id="test.builder" drawer="test-drawer" />
+		<builder id="grid.builder" drawer="grid-drawer" />
+		<builder id="gridexport.builder" drawer="gridexport-drawer" />
+		<builder id="singleexport.builder" drawer="singleexport-drawer" />
+		<builder id="suggest.builder" drawer="suggest-drawer" />
+		<builder id="alert.builder" drawer="alert-drawer" />
+		<builder id="tree.builder" drawer="tree-drawer" />
+		<builder id="dragdrop.builder" drawer="dragdrop-drawer" />
+		<builder id="resourcesImport.builder" drawer="resourcesImport-drawer" />
+		<builder id="frame.builder" drawer="frame-drawer" />
+		<builder id="context.builder" drawer="context-drawer" />
+		<builder id="tabLayout.builder" drawer="tabLayout-drawer" />
+		<builder id="tabContent.builder" drawer="tabContent-drawer" />
+		<builder id="reader.builder" drawer="reader-drawer" />
+		<builder id="groupcolumn.builder" drawer="groupcolumn-drawer" />
+		<!-- builder id="helloworld.builder" drawer="helloworld-drawer"/>
+		<builder id="composite.builder" drawer="composite-drawer" />
+		<builder id="param.builder" drawer="param-drawer" /-->
+	</builders>
+	<drawers>
+		<drawer id="tooltip-link-drawer">
+			<set-property property="templateStart" 	value="velocity/template/tooltip/tooltip_link_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/tooltip/tooltip_link_end.vm" />
+		</drawer>
+		<drawer id="tooltip-content-drawer">
+			<set-property property="templateStart" 	value="velocity/template/tooltip/tooltip_content_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/tooltip/tooltip_content_end.vm" />
+		</drawer>
+		<drawer id="calendar-drawer">
+			<set-property property="templateStart" 	value="velocity/template/calendar/calendar_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/calendar/calendar_end.vm" />
+		</drawer>
+		<drawer id="combomulti-drawer">
+			<set-property property="templateStart" 	value="velocity/template/combomulti/combomulti_start.vm" />
+		</drawer>
+		<drawer id="editabletext-drawer">
+			<set-property property="templateStart" 	value="velocity/template/editabletext/editabletext_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/editabletext/editabletext_end.vm" />
+		</drawer>
+		<drawer id="fileupload-drawer">
+			<set-property property="templateStart" 	value="velocity/template/fileupload/fileupload_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/fileupload/fileupload_end.vm" />
+		</drawer>
+		<drawer id="newwindow-drawer">
+			<set-property property="templateStart" 	value="velocity/template/newwindow/newwindow_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/newwindow/newwindow_end.vm" />
+		</drawer>
+		<drawer id="spliterlayout-drawer">
+			<set-property property="templateStart" 	value="velocity/template/spliterlayout/spliterlayout_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/spliterlayout/spliterlayout_end.vm" />
+		</drawer>
+		<drawer id="spliterlayout-column-drawer">
+			<set-property property="templateStart" 	value="velocity/template/spliterlayout/column_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/spliterlayout/column_end.vm" />
+		</drawer>
+		<drawer id="spliterlayout-cell-drawer">
+			<set-property property="templateStart" 	value="velocity/template/spliterlayout/cell_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/spliterlayout/cell_end.vm" />
+		</drawer>
+		<drawer id="dockinglayout-drawer">
+			<set-property property="templateStart" 	value="velocity/template/docking/dockinglayout_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/docking/dockinglayout_end.vm" />
+		</drawer>
+		<drawer id="tabbox-drawer">
+			<set-property property="templateStart" 	value="velocity/template/tabbox/tabbox_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/tabbox/tabbox_end.vm" />
+		</drawer>
+		<drawer id="tabs-drawer">
+			<set-property property="templateStart" 	value="velocity/template/tabbox/tabs_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/tabbox/tabs_end.vm" />
+		</drawer>
+		<drawer id="tab-drawer">
+			<set-property property="templateStart" 	value="velocity/template/tabbox/tab_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/tabbox/tab_end.vm" />
+		</drawer>
+		<drawer id="tabpanels-drawer">
+			<set-property property="templateStart" 	value="velocity/template/tabbox/tabpanels_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/tabbox/tabpanels_end.vm" />
+		</drawer>
+		<drawer id="tabpanel-drawer">
+			<set-property property="templateStart" 	value="velocity/template/tabbox/tabpanel_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/tabbox/tabpanel_end.vm" />
+		</drawer>
+		<drawer id="menu-drawer">
+			<set-property property="templateStart" 	value="velocity/template/menu/menu_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/menu/menu_end.vm" />
+		</drawer>
+		<drawer id="contextmenu-drawer">
+			<set-property property="templateStart" 	value="velocity/template/menu/contextmenu_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/menu/contextmenu_end.vm" />
+		</drawer>
+		<drawer id="menubar-drawer">
+			<set-property property="templateStart" 	value="velocity/template/menu/menubar_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/menu/menubar_end.vm" />
+		</drawer>
+		<drawer id="zone-drawer">
+			<set-property property="templateStart" 	value="velocity/template/zone/zone_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/zone/zone_end.vm" />
+		</drawer>
+		<drawer id="zoneRefresher-drawer">
+			<set-property property="templateStart" 	value="velocity/template/zone/zoneRefresher_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/zone/zoneRefresher_end.vm" />
+		</drawer>
+		<drawer id="accordion-drawer">
+			<set-property property="templateStart" 	value="velocity/template/accordion/accordion_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/accordion/accordion_end.vm" />
+		</drawer>
+		<drawer id="accordionitem-drawer">
+			<set-property property="templateStart" 	value="velocity/template/accordion/accordionitem_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/accordion/accordionitem_end.vm" />
+		</drawer>
+		<drawer id="list-drawer">
+			<set-property property="templateStart" 	value="velocity/template/list/list_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/list/list_end.vm" />
+		</drawer>
+		<drawer id="control-drawer">
+			<set-property property="templateStart" 	value="velocity/template/control/control_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/control/control_end.vm" />
+		</drawer>
+		<drawer id="collapse-drawer">
+			<set-property property="templateStart" 	value="velocity/template/collapse/collapse_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/collapse/collapse_end.vm" />
+		</drawer>
+		<drawer id="collapseHeader-drawer">
+			<set-property property="templateStart" 	value="velocity/template/collapse/collapseHeader_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/collapse/collapseHeader_end.vm" />
+		</drawer>
+		<drawer id="collapseManager-drawer">
+			<set-property property="templateStart" 	value="velocity/template/collapse/collapseManager_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/collapse/collapseManager_end.vm" />
+		</drawer>
+		<drawer id="test-drawer">
+			<set-property property="templateStart" 	value="velocity/template/control/test_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/control/test_end.vm" />
+		</drawer>
+		<drawer id="messenger-drawer">
+			<set-property property="templateStart" 	value="velocity/template/messenger/messenger_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/messenger/messenger_end.vm" />
+		</drawer>
+		<drawer id="message-drawer">
+			<set-property property="templateStart" 	value="velocity/template/messenger/message_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/messenger/message_end.vm" />
+		</drawer>
+		<drawer id="action-drawer">
+			<set-property property="templateStart" 	value="velocity/template/control/action_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/control/action_end.vm" />
+		</drawer>
+		<drawer id="mandatoryControl-drawer">
+			<set-property property="templateStart" 	value="velocity/template/mandatory/mandatoryControl_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/mandatory/mandatoryControl_end.vm" />
+		</drawer>
+		<drawer id="mandatory-drawer">
+			<set-property property="templateStart" 	value="velocity/template/mandatory/mandatory_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/mandatory/mandatory_end.vm" />
+		</drawer>
+		<drawer id="grid-drawer">
+			<set-property property="templateStart" 	value="velocity/template/grid/grid_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/grid/grid_end.vm" />
+		</drawer>
+		<drawer id="gridexport-drawer">
+			<set-property property="templateStart" 	value="velocity/template/export/grid/export_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/export/grid/export_end.vm" />
+		</drawer>
+		<drawer id="singleexport-drawer">
+			<set-property property="templateStart" 	value="velocity/template/export/single/export_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/export/single/export_end.vm" />
+		</drawer>
+		<drawer id="suggest-drawer">
+			<set-property property="templateStart" 	value="velocity/template/suggest/suggest_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/suggest/suggest_end.vm" />
+		</drawer>
+		<drawer id="alert-drawer">
+			<set-property property="templateStart" 	value="velocity/template/alert/alert_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/alert/alert_end.vm" />
+		</drawer>
+		<drawer id="tree-drawer">
+			<set-property property="templateStart" 	value="velocity/template/tree/tree_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/tree/tree_end.vm" />
+		</drawer>
+		<drawer id="dragdrop-drawer">
+			<set-property property="templateStart" 	value="velocity/template/dragdrop/dragdrop_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/dragdrop/dragdrop_end.vm" />
+		</drawer>
+		<drawer id="resourcesImport-drawer">
+			<set-property property="templateStart" 	value="velocity/template/resourcesImport/resourcesImport_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/resourcesImport/resourcesImport_end.vm" />
+		</drawer>
+		<drawer id="frame-drawer">
+			<set-property property="templateStart" 	value="velocity/template/frame/frame_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/frame/frame_end.vm" />
+		</drawer>
+		<drawer id="context-drawer">
+			<set-property property="templateStart" 	value="velocity/template/context/context_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/context/context_end.vm" />
+		</drawer>
+		<drawer id="tabLayout-drawer">
+			<set-property property="templateStart" 	value="velocity/template/tabLayout/tabLayout_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/tabLayout/tabLayout_end.vm" />
+		</drawer>
+		<drawer id="tabContent-drawer">
+			<set-property property="templateStart" 	value="velocity/template/tabLayout/tabContent_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/tabLayout/tabContent_end.vm" />
+		</drawer>
+		<drawer id="reader-drawer">
+			<set-property property="templateStart" 	value="velocity/template/reader/reader_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/reader/reader_end.vm" />
+		</drawer>
+		<!-- drawer id="helloworld-drawer">
+			<set-property property="templateStart" 	value="velocity/template/helloworld/helloworld_start.jsp" />
+			<set-property property="templateEnd" 	value="velocity/template/helloworld/helloworld_end.jsp" />
+		</drawer-->
+		<drawer id="composite-drawer">
+			<set-property property="templateStart" 	value="velocity/template/helloworld/helloworld_start.jsp" />
+			<set-property property="templateEnd" 	value="velocity/template/helloworld/helloworld_end.jsp" />
+		</drawer>
+		<drawer id="groupcolumn-drawer">
+			<set-property property="templateStart" 	value="velocity/template/grid/simplegrid/groupcolumn_start.vm" />
+			<set-property property="templateEnd" 	value="velocity/template/grid/simplegrid/groupcolumn_end.vm" />
+		</drawer>
+
+		
+	</drawers>
+</ria-config>

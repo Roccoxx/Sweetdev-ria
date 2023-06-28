@@ -1,0 +1,27 @@
+<div id="${id}_container" #if (${style})style="${style}"#end  #if (${styleClass})class="${styleClass}"#end >
+</div>
+<script type="text/javascript">
+
+	new SweetDevRia.MenuBar("${id}");
+	#foreach($menuitem in $items)
+			new SweetDevRia.MenuItem("${menuitem.id}");		
+			SweetDevRia.$("${menuitem.id}").checkbox = ${menuitem.checkbox};
+			SweetDevRia.$("${menuitem.id}").checked = ${menuitem.checked};
+			SweetDevRia.$("${menuitem.id}").disabled = ${menuitem.disabled};
+			SweetDevRia.$("${menuitem.id}").image = #if($menuitem.image) "${menuitem.image}" #else null #end;
+			SweetDevRia.$("${menuitem.id}").onclick = function(){${menuitem.onclick}};
+			SweetDevRia.$("${menuitem.id}").oncheck = function(){${menuitem.oncheck}};
+			SweetDevRia.$("${menuitem.id}").onuncheck = function(){${menuitem.onuncheck}};
+			SweetDevRia.$("${menuitem.id}").label = "${menuitem.label}";
+
+			SweetDevRia.$("${menuitem.parentId}").addItem(SweetDevRia.$("${menuitem.id}"));
+
+			#if($menuitem.items.size() > 0)
+				#set( $menuitems = $menuitem.items )
+				#parse("velocity/template/menu/menuitem.vm")
+			#end
+	#end
+
+	SweetDevRia.$("${id}").render();
+	
+</script>

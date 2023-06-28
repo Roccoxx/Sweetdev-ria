@@ -1,0 +1,6 @@
+<script type="text/javascript">
+SweetDevRia.ContextManager.getInstance().pushContext("${contextId}");
+#if(${portlet})
+SweetDevRia.PortletContextManager.getInstance().registerContext(new SweetDevRia.PortletContext("${portletIdMarker}","${contextId}"));
+#end
+</script>

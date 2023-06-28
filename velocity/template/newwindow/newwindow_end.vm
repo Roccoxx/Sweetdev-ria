@@ -1,0 +1,41 @@
+#if(!$url || !$asIframe)
+	#if(!${isZoneIncluded})
+		#set( $winid = "${id}" )
+		
+		#set( $id = "${id}_zone" )	
+		#parse("velocity/template/zone/zone_end.vm")
+		
+		#set( $id = "${winid}" )
+	#end
+</div>#end
+</div>#* SWTRIA-1065 *#
+
+<script type="text/javascript">
+	SweetDevRia.riaComponentParentIds.pop ();	
+#* ser : les windows ne peuvent pas etre hookee ds une autre window sinon, tu bouges une window ,les windows imbriquees se ferment 
+	// useful to close multi modal nested windows
+	#if(${hooker})
+		SweetDevRia.$("${id}").hookerId = "${hooker.id}";
+	#end
+*#	
+
+	#if (!${frameDisplayed})
+		SweetDevRia.$("${id}").createFrame = function(){
+		    return new SweetDevRia.FrameNude("${id}_nude_frame",true);
+		};
+		
+		SweetDevRia.$("${id}").getFrame = function(){
+		    return SweetDevRia.$("${id}_nude_frame");
+		};
+	#end
+	
+	
+	#if (${onLoad})
+	   #if(${asIframe})
+	       SweetDevRia.$("${id}").loadIframe = function(){${onLoad};};
+   	#end
+	#end
+	
+	SweetDevRia.$("${id}").render();
+	
+</script>

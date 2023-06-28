@@ -1,0 +1,8 @@
+#set( $diese = "#" )
+<li id="${id}" #if($selected) class="selected"#end onclick="SweetDevRia.$('${parentTabboxId}').saveSelection(this);"><a href="${diese}${id}_tabpanel${index}" #if(${titleLink}) title="${titleLink}" #end><em style="padding-right : 16px;">
+    #if(${icon})<img style="height:16px;width : 16px;text-decoration : none;border : none;" src="${icon}"/>#end${label}#if(${removable})<span onclick="SweetDevRia.$('${id}').remove(SweetDevRia.$('${parentTabboxId}'),this);" style="height:16px;width : 16px;position : absolute; right : 0px;top : 0px;text-decoration : none;border : none;" class="ideo-tab-closeImg"></span>#end
+</em></a>
+<script type="text/javascript">
+	var ${id} = new SweetDevRia.RiaTab("${id}");
+</script>
+</li>

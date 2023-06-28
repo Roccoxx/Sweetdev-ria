@@ -1,0 +1,4 @@
+#if(${spliter})
+<div id="${id}" class="ideo-hsp-main #if(${spliterStyleClass})${spliterStyleClass}#end"#if(${spliterStyle}) style="${spliterStyle}"#end>&nbsp;</div>
+#end
+<div id="${id}_zone" style="height : ${height};width : 100%;${style}"  class="ideo-hsp-zone #if(${styleClass})${styleClass}#end">

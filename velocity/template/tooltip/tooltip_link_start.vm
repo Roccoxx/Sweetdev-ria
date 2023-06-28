@@ -1,0 +1,1 @@
+<a href="#" id="tooltipLink$contentId" #if(${titleLink})title="${titleLink}"#end#if(${style})style="${style}"#end #if(${styleClass})class="${styleClass}"#end onclick="SweetDevRia.getComponent('$contentId').open(this);#if($cancelBubble)SweetDevRia.EventHelper.stopPropagation (event);SweetDevRia.EventHelper.preventDefault (event);#end this.blur(); return false;">

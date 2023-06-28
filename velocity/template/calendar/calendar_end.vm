@@ -1,0 +1,6 @@
+#if (${popup})
+</a>
+#end
+
+## set the id as in the starting vm
+#set ($id = "${id}Cal")

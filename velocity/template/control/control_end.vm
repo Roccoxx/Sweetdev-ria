@@ -1,0 +1,21 @@
+<script type="text/javascript">
+	new SweetDevRia.Control ("${id}");
+	SweetDevRia.$("${id}").setSrcIds ("${srcIds}");
+	#if (${canBeEmpty} == false)SweetDevRia.$("${id}").setCanBeEmpty (${canBeEmpty});#end
+	#if (${mask})SweetDevRia.$("${id}").setTest ("${mask}"  
+	#if (${message} && ${messageType}),[["${messageType}","${message}"]]#end);
+	#end
+	#if (${allowChar})SweetDevRia.$("${id}").allowChar = "${allowChar}";  #end
+	#foreach ($test in ${tests}) 
+		#if (${test.testClass})SweetDevRia.$("${id}").setTestClass ("${test.testClass}"  #end
+		#if (${test.mask})SweetDevRia.$("${id}").setTest ("${test.mask}"  #end
+		#if (${test.functionTest})SweetDevRia.$("${id}").setFunctionTest (${test.functionTest}  #end
+		,[#foreach ($message in ${test.messages})#if ($velocityCount>0),#end	["${message.type}","${message.message}"]#end]);
+	#end
+	#foreach ($action in ${actions}) 
+		SweetDevRia.$("${id}").addAction ($action.type, #if(${action.targetIds}) "${action.targetIds}"#else "" #end, #if (${action.condition})"${action.condition}"#else null #end, #if (${action.param})"${action.param}"#else null #end);
+	#end
+	#foreach ($action in ${actionsElse}) 
+		SweetDevRia.$("${id}").addActionElse ($action.type,#if(${action.targetIds}) "${action.targetIds}"#else "" #end, #if (${action.condition})"${action.condition}"#else null #end, #if (${action.param})"${action.param}"#else null #end);
+	#end
+</script>

@@ -1,0 +1,24 @@
+#if(${model.url} && ${model.asIframe})
+	</iframe>
+
+    #if(!$preloaded)
+		<script type="text/javascript">
+		  SweetDevRia.DomHelper.get('${id}_content').src = SweetDevRia.DisplayManager.getInstance().getBlankPage();
+	</script>
+    #end
+#else
+
+## must not be loaded AND url as not iframe OR no url 
+#if(((${model.url} && !${model.asIframe}) || !${model.url}) )
+	#set( $tabid = "${model.id}" )
+	
+	#set( $id = "${id}_zone" )	
+	#parse("velocity/template/zone/zone_end.vm")
+	
+	#set( $id = "${tabid}" )
+#end
+
+</div>
+#end
+
+</div>

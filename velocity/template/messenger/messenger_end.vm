@@ -1,0 +1,32 @@
+<span id="${id}_container" style="display:none">
+	<span id="${id}" #if (${style})style="${style}"#end  #if (${styleClass})class="${styleClass}"#end ></span>
+</span>
+<script type="text/javascript">
+	new SweetDevRia.Messenger ("${id}");
+	#foreach ($type in ${types}) 
+		SweetDevRia.$("${id}").addMessageType ("${type}");
+	#end
+	
+	#if (${displayIcon} == false)SweetDevRia.$("${id}").displayIcon = ${displayIcon};#end
+	#if (${displayMessage} == false)SweetDevRia.$("${id}").displayMessage = ${displayMessage};#end
+	
+	#if (${frameDisplayed})
+		SweetDevRia.$("${id}").createFrame();
+		SweetDevRia.$("${id}").getFrame().contentId = "${id}";
+		SweetDevRia.$("${id}").getFrame().resizeMode = SweetDevRia.Frame.RESIZE_MODE_NONE;
+		SweetDevRia.$("${id}").getFrame().borderMode = SweetDevRia.Frame.BORDER_MODE_ALL;
+		SweetDevRia.$("${id}").getFrame().canDrag = false;
+		SweetDevRia.$("${id}").getFrame().showBorderOnOver = false;
+	#else
+		SweetDevRia.$("${id}").createFrame = function(){
+		    return new SweetDevRia.FrameNude("${id}_nude_frame");
+		};
+		
+		SweetDevRia.$("${id}").getFrame = function(){
+		    return new SweetDevRia.FrameNude("${id}_nude_frame");
+		};
+		
+		SweetDevRia.$("${id}").createFrame();
+	#end
+	
+</script>

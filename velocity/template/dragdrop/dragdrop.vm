@@ -1,0 +1,26 @@
+<script type="text/javascript">
+	#if ($handler)
+		new SweetDevRia.DragDrop ("${id}", null, $handler);
+	#else
+		new SweetDevRia.DragDrop ("${id}");
+	#end
+	
+	#if (${multiSelect})
+		SweetDevRia.$('${id}').multiSelect = ${multiSelect};
+	#end
+	#if (${mode})
+		SweetDevRia.$('${id}').mode = "${mode}";
+	#end
+	
+	#foreach ($drag in $dragZoneIds)
+		SweetDevRia.$('${id}').addDragZone ("$drag");
+	#end
+
+	#foreach ($drop in $dropZoneIds)
+		SweetDevRia.$('${id}').addDropZone ("$drop");
+	#end
+		
+	#if ($dragZoneCoord)
+		SweetDevRia.$('${id}').addDragZoneCoord ($dragZoneCoord.get(0), $dragZoneCoord.get(1), $dragZoneCoord.get(2), $dragZoneCoord.get(3));
+	#end
+</script>

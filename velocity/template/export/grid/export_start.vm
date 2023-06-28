@@ -1,0 +1,5 @@
+#if(${exportMode}==0)
+	<div onclick="SweetDevRia.$('${gridId}').showExcelProperties('${id}')" #if(${style})style="${style}"#end #if(${styleClass})class="${styleClass}" #end>
+#else
+	<div onclick="SweetDevRia.$('${gridId}').excelExport(${exportMode},#if(${onlyChecked})SweetDevRia.$('${gridId}').getCheckedRows()#else null #end,'${id}')" #if(${style})style="${style}"#end #if(${styleClass})class="${styleClass}" #end>
+#end

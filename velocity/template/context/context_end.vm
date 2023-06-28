@@ -1,0 +1,3 @@
+<script type="text/javascript">
+	SweetDevRia.ContextManager.getInstance().popContext("${contextId}");
+</script>

@@ -1,0 +1,29 @@
+</div>
+
+#if (${tooltip} == true)
+	<script type="text/javascript">
+	    new SweetDevRia.ClickToOpen("${id}_editZone", 10, 5);
+		SweetDevRia.$("${id}_editZone").autoClose = false;
+	</script>
+#end
+
+<script type="text/javascript"> 
+
+	#if ($value && $value != "")
+		#if (${editComp})
+		SweetDevRia.EditableText.add ("${id}", "${editComp}", "$value", null, null, true);
+		#else
+		SweetDevRia.EditableText.add ("${id}", null, "$value", null, null, true);
+		#end
+	#else
+		#if (${editComp})
+		SweetDevRia.EditableText.add ("${id}", "${editComp}", null, null, null, true);
+		#else
+		SweetDevRia.EditableText.add ("${id}", null, null, null, null, true);
+		#end
+	#end
+
+
+</script>
+
+

@@ -1,0 +1,23 @@
+</div>
+<script type="text/javascript">
+	new SweetDevRia.Alert ("${id}");
+
+	SweetDevRia.$("${id}").i18n={};
+	#foreach( $key in $i18n.keySet() )
+    	SweetDevRia.$("${id}").i18n["$key"] = "$i18n.get($key)";
+	#end
+
+	SweetDevRia.$("${id}").setType ("${type}");
+	SweetDevRia.$("${id}").setActionType ("${actionType}");
+    SweetDevRia.$("${id}").setModal(${modal});
+        
+    #if (!${frameDisplayed})
+		SweetDevRia.$("${id}").createFrame = function(){
+		    return new SweetDevRia.FrameNude("${id}_nude_frame",true);
+		};
+		
+		SweetDevRia.$("${id}").getFrame = function(){
+		    return SweetDevRia.$("${id}_nude_frame");
+		};
+	#end
+</script>

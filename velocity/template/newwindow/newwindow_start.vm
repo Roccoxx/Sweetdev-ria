@@ -1,0 +1,58 @@
+<div id="${id}_container" #if (${style})style="${style}"#end  #if (${styleClass})class="${styleClass}"#end >
+</div>
+<script type="text/javascript">
+	new SweetDevRia.Window("${id}",${x},${y},${width},${height},${minWidth},${minHeight},${maxWidth},${maxHeight},#if(${url})"${url}"#else null #end,${modal},${openAtStartup},${loadAtStartup});
+
+
+
+SweetDevRia.$("${id}").title = "${title}";
+	#if (${message} && ${message} != "")
+		SweetDevRia.$("${id}").message = "${message}";
+	#end
+	
+	#if (${style})
+		SweetDevRia.$("${id}").style = "${style}";
+	#end
+	#if (${styleClass})
+		SweetDevRia.$("${id}").styleClass = "${styleClass}";
+	#end
+	
+	SweetDevRia.$("${id}").i18n={};
+	#foreach( $key in $i18n.keySet() )
+    	SweetDevRia.$("${id}").i18n["$key"] = "$i18n.get($key)";
+	#end
+	
+	SweetDevRia.$("${id}").asIframe = ${asIframe};
+	SweetDevRia.$("${id}").canMinimize = ${minimize};
+	SweetDevRia.$("${id}").canMaximize = ${maximize};
+	SweetDevRia.$("${id}").canClose = ${closeable};
+#if(${docked})
+	SweetDevRia.$("${id}").isResizable = false;
+	SweetDevRia.$("${id}").dock("${dockedId}");
+#else
+	SweetDevRia.$("${id}").isResizable = ${resizable};
+#end
+	
+	SweetDevRia.$("${id}").displayTitleBar = ${displayTitleBar};
+
+	#if(${active})
+		SweetDevRia.Window.prototype.activeWindow = SweetDevRia.$("${id}");
+	#end
+
+	SweetDevRia.riaComponentParentIds.push ("${id}");
+</script>
+
+<div style="none"> #* SWTRIA-1065 *#
+#if(!$url || !$asIframe)
+	<div id="${id}_content">
+	#if(!${isZoneIncluded})
+		#set( $winid = "${id}" )
+		
+		#set( $id = "${id}_zone" )
+		#set( $loadAtStartup = false )
+		#set( $refreshDelay = 0 )
+		#parse("velocity/template/zone/zone_start.vm")
+		
+		#set( $id = "${winid}" )
+	#end
+#end

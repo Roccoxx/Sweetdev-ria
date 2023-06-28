@@ -1,0 +1,44 @@
+#if(${defaultSkin})
+	<link type="text/css" rel="stylesheet" href="${contextPath}${defaultSkin}"></link>
+#end
+#if(${customCss})
+	<link type="text/css" rel="stylesheet" href="${contextPath}${customCss}"></link>
+#end
+
+<script type="text/javascript">
+	SweetDevRia.DateFormat.pattern = "${datePattern}";
+	SweetDevRia.DateFormat.separator = "${dateSeparator}";
+	SweetDevRia.DateFormat.multiDateSeparator = "${multiDateSeparator}";
+	//initialisation des expressions reguliere des differents formats de dates
+	f1.reDate=new RegExp("^(0|1)[0-9]"+SweetDevRia.DateFormat.separator+"[0-3][0-9]"+SweetDevRia.DateFormat.separator+"(19|20)[0-9]{2}$");
+	f2.reDate=reDate=new RegExp("^(19|20)[0-9]{2}"+SweetDevRia.DateFormat.separator+"(0|1)[0-9]"+SweetDevRia.DateFormat.separator+"[0-3][0-9]$");
+	f3.reDate=new RegExp("^[0-3][0-9]"+SweetDevRia.DateFormat.separator+"(0|1)[0-9]"+SweetDevRia.DateFormat.separator+"(19|20)[0-9]{2}$");
+
+	DateFormat.setCurrentFormat(SweetDevRia.DateFormat.pattern);
+	
+	#foreach( $key in $i18n.keySet() )
+    	SweetDevRia.RiaComponent.prototype.i18n["$key"] = "$i18n.get($key)";
+	#end
+	
+	var RIA_RESOURCES_END = new Date ();
+	
+	#if($log)
+	SweetDevRia.EventHelper.addPreLoadListener (window, function () {
+		
+		SweetDevRia.endLog ("Log.Body");
+	});
+	#end
+	
+	YAHOO.util.Event.addListener(window, "load", SweetDevRia.EventHelper.runLoadListeners);
+	
+	#if($log)
+	SweetDevRia.EventHelper.addPostLoadListener (window, function () {
+		window.RIA_GLOBAL_END = new Date ();
+		
+		SweetDevRia.sendLogs ();
+	});
+	initLogBench();
+
+	SweetDevRia.startLog ("Log.Body");
+#end  
+</script>
